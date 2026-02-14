@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ja="ログイン・会員登録 - 日本語村" data-en="Login / Registration - NIHONGOMURA" data-zh="登录/注册 - 日本语村">ログイン・会員登録 - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .auth-container {
+            max-width: 500px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--medium-gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-orange);
+            border-bottom-color: var(--primary-orange);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-orange);
+        }
+
+        .error-message {
+            color: #d32f2f;
+            background: #ffebee;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #388e3c;
+            background: #e8f5e9;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 0.5rem;
+        }
+
+        .forgot-password a {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--medium-gray);
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: var(--light-gray);
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo"><img src="images/logo.png" alt="日本語村 ロゴ"></a>
+            <button class="mobile-menu-toggle" aria-label="メニュー"><i class="fas fa-bars"></i></button>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a></li>
+                    <li><a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a></li>
+                    <li><a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a></li>
+                    <li><a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a></li>
+                    <li><a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ja">日本語</button><span class="separator">/</span>
+                    <button class="lang-btn" data-lang="en">English</button><span class="separator">/</span>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <div class="auth-container">
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <!-- タブ -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" data-ja="ログイン" data-en="Login" data-zh="登录">ログイン</button>
+                <button class="auth-tab" data-tab="register" data-ja="新規登録" data-en="Register" data-zh="注册">新規登録</button>
+            </div>
+
+            <!-- ログインフォーム -->
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail" data-ja="メールアドレス" data-en="Email Address" data-zh="邮箱地址">メールアドレス</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" data-ja="パスワード" data-en="Password" data-zh="密码">パスワード</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <div class="forgot-password">
+                    <a href="#" id="forgotPasswordLink" data-ja="パスワードを忘れた方" data-en="Forgot password?" data-zh="忘记密码？">パスワードを忘れた方</a>
+                </div>
+                <button type="submit" class="submit-btn" data-ja="ログイン" data-en="Login" data-zh="登录">ログイン</button>
+            </form>
+
+            <!-- 新規登録フォーム -->
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerEmail" data-ja="メールアドレス *" data-en="Email Address *" data-zh="邮箱地址 *">メールアドレス *</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword" data-ja="パスワード *" data-en="Password *" data-zh="密码 *">パスワード *</label>
+                    <input type="password" id="registerPassword" minlength="6" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerFullName" data-ja="氏名 *" data-en="Full Name *" data-zh="姓名 *">氏名 *</label>
+                    <input type="text" id="registerFullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerBirthDate" data-ja="生年月日 *" data-en="Date of Birth *" data-zh="出生日期 *">生年月日 *</label>
+                    <input type="date" id="registerBirthDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerNationality" data-ja="国籍 *" data-en="Nationality *" data-zh="国籍 *">国籍 *</label>
+                    <input type="text" id="registerNationality" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerJapaneseLevel" data-ja="日本語レベル *" data-en="Japanese Level *" data-zh="日语水平 *">日本語レベル *</label>
+                    <select id="registerJapaneseLevel" required>
+                        <option value="">選択してください</option>
+                        <option value="N1">N1</option>
+                        <option value="N2">N2</option>
+                        <option value="N3">N3</option>
+                        <option value="N4">N4</option>
+                        <option value="N5">N5</option>
+                        <option value="Native">ネイティブ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerUniversity" data-ja="大学名 *" data-en="University *" data-zh="大学名称 *">大学名 *</label>
+                    <input type="text" id="registerUniversity" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerDegreeLevel" data-ja="学位レベル *" data-en="Degree Level *" data-zh="学位级别 *">学位レベル *</label>
+                    <select id="registerDegreeLevel" required>
+                        <option value="">選択してください</option>
+                        <option value="学部生">学部生（大学）</option>
+                        <option value="修士課程">大学院生（修士課程）</option>
+                        <option value="博士課程">大学院生（博士課程）</option>
+                        <option value="その他">その他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerMajor" data-ja="専攻 *" data-en="Major *" data-zh="专业 *">専攻 *</label>
+                    <input type="text" id="registerMajor" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerGraduationDate" data-ja="卒業予定日 *" data-en="Expected Graduation *" data-zh="预计毕业日期 *">卒業予定日 *</label>
+                    <select id="registerGraduationDate" required>
+                        <option value="">選択してください</option>
+                        <option value="graduated">既卒</option>
+                        <option value="2026-03-01">2026年3月</option>
+                        <option value="2026-09-01">2026年9月</option>
+                        <option value="2027-03-01">2027年3月</option>
+                        <option value="2027-09-01">2027年9月</option>
+                        <option value="2028-03-01">2028年3月</option>
+                        <option value="2028-09-01">2028年9月</option>
+                        <option value="2029-03-01">2029年3月</option>
+                        <option value="2029-09-01">2029年9月</option>
+                        <option value="2030-03-01">2030年3月</option>
+                        <option value="2030-09-01">2030年9月</option>
+                        <option value="2031-03-01">2031年3月</option>
+                        <option value="2031-09-01">2031年9月</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone" data-ja="電話番号 *" data-en="Phone Number *" data-zh="电话号码 *">電話番号 *</label>
+                    <input type="tel" id="registerPhone" required>
+                </div>
+                <button type="submit" class="submit-btn" data-ja="新規登録" data-en="Register" data-zh="注册">新規登録</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+                <span>|</span>
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+                <span>|</span>
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.js"></script>
+    <script src="js/header.js"></script>
+    <script>
+        // Supabase初期化
+        const SUPABASE_URL = 'https://ibrydjjygyzgtldznwhw.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlicnlkamp5Z3l6Z3RsZHpud2h3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA5NzYzNDcsImV4cCI6MjA4NjU1MjM0N30.4Bd2VM75bro6RA3qrPTWrlXriyKuvDRL5_HdOjfUF1E';
+        
+        let supabaseClient;
+        if (window.supabase && window.supabase.createClient) {
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('Supabase initialized successfully');
+        } else {
+            console.error('Supabase SDK not loaded');
+        }
+        
+        // 現在のユーザーを取得
+        async function getCurrentUser() {
+            if (!supabaseClient) return null;
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            return user;
+        }
+    </script>
+    <script>
+        // タブ切り替え
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                // タブのアクティブ状態を切り替え
+                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // フォームの表示を切り替え
+                document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
+                document.getElementById(`${tabName}Form`).classList.add('active');
+                
+                // メッセージをクリア
+                hideMessages();
+            });
+        });
+
+        // メッセージ表示関数
+        function showErrorMessage(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showSuccessMessage(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // ログインフォーム送信
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email,
+                password
+            });
+            
+            if (error) {
+                showErrorMessage('ログインに失敗しました: ' + error.message);
+                return;
+            }
+            
+            showSuccessMessage('ログインに成功しました！');
+            setTimeout(() => {
+                window.location.href = 'mypage.html';
+            }, 1000);
+        });
+
+        // 新規登録フォーム送信
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+            
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const fullName = document.getElementById('registerFullName').value;
+            const birthDate = document.getElementById('registerBirthDate').value;
+            const nationality = document.getElementById('registerNationality').value;
+            const japaneseLevel = document.getElementById('registerJapaneseLevel').value;
+            const university = document.getElementById('registerUniversity').value;
+            const degreeLevel = document.getElementById('registerDegreeLevel').value;
+            const major = document.getElementById('registerMajor').value;
+            const graduationDate = document.getElementById('registerGraduationDate').value;
+            const phone = document.getElementById('registerPhone').value;
+            
+            // Supabase Authでユーザー登録
+            const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                email,
+                password
+            });
+            
+            if (authError) {
+                showErrorMessage('登録に失敗しました: ' + authError.message);
+                return;
+            }
+            
+            // プロフィール情報を保存
+            const { error: profileError } = await supabaseClient
+                .from('profiles')
+                .insert([{
+                    id: authData.user.id,
+                    email,
+                    full_name: fullName,
+                    birth_date: birthDate,
+                    nationality,
+                    japanese_level: japaneseLevel,
+                    university,
+                    degree_level: degreeLevel,
+                    major,
+                    graduation_date: graduationDate,
+                    phone,
+                    role: 'student'
+                }]);
+            
+            if (profileError) {
+                showErrorMessage('プロフィール保存に失敗しました: ' + profileError.message);
+                return;
+            }
+            
+            showSuccessMessage('登録が完了しました！確認メールをご確認ください。');
+            setTimeout(() => {
+                // ログインタブに切り替え
+                document.querySelector('[data-tab="login"]').click();
+            }, 2000);
+        });
+
+        // パスワードリセット
+        document.getElementById('forgotPasswordLink').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = prompt('パスワードリセット用のメールアドレスを入力してください:');
+            if (!email) return;
+            
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
+            if (error) {
+                showErrorMessage('エラー: ' + error.message);
+            } else {
+                showSuccessMessage('パスワードリセット用のメールを送信しました。');
+            }
+        });
+
+        // 既にログイン済みの場合はマイページにリダイレクト
+        (async () => {
+            const user = await getCurrentUser();
+            if (user) {
+                window.location.href = 'mypage.html';
+            }
+        })();
+    </script>
+</body>
+</html>
