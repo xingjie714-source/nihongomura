@@ -16,7 +16,7 @@ async function handleSeminarForm(event) {
     };
 
     try {
-        const { error } = await supabase
+        const { error } = await supabaseDb
             .from('seminars')
             .insert([formData]);
 
@@ -49,7 +49,7 @@ async function handleEventForm(event) {
     };
 
     try {
-        const { error } = await supabase
+        const { error } = await supabaseDb
             .from('events')
             .insert([formData]);
 
@@ -84,7 +84,7 @@ async function handleJobForm(event) {
     };
 
     try {
-        const { error } = await supabase
+        const { error } = await supabaseDb
             .from('jobs')
             .insert([formData]);
 

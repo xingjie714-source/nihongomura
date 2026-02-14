@@ -26,7 +26,7 @@ async function uploadImage(file, bucket = 'images') {
         const fileName = `${timestamp}_${randomString}.${fileExt}`;
 
         // Supabase Storageにアップロード
-        const { data, error } = await supabase.storage
+        const { data, error } = await supabaseDb.storage
             .from(bucket)
             .upload(fileName, file, {
                 cacheControl: '3600',
@@ -36,7 +36,7 @@ async function uploadImage(file, bucket = 'images') {
         if (error) throw error;
 
         // 公開URLを取得
-        const { data: { publicUrl } } = supabase.storage
+        const { data: { publicUrl } } = supabaseDb.storage
             .from(bucket)
             .getPublicUrl(fileName);
 
@@ -54,7 +54,7 @@ async function uploadImage(file, bucket = 'images') {
 // 画像を削除
 async function deleteImage(fileName, bucket = 'images') {
     try {
-        const { error } = await supabase.storage
+        const { error } = await supabaseDb.storage
             .from(bucket)
             .remove([fileName]);
 

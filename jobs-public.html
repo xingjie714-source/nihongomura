@@ -295,7 +295,7 @@
         // 求人を読み込み
         async function loadJobs(filters = {}) {
             try {
-                let query = supabase
+                let query = supabaseDb
                     .from('jobs')
                     .select('*')
                     .order('created_at', { ascending: false });

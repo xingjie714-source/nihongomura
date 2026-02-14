@@ -269,7 +269,7 @@
         // 記事を読み込み
         async function loadArticles(category = null) {
             try {
-                let query = supabase
+                let query = supabaseDb
                     .from('knowledge_articles')
                     .select('*')
                     .order('created_at', { ascending: false });

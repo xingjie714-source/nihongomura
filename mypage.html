@@ -283,7 +283,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabaseDb/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/language.min.js"></script>
     <script>
@@ -307,7 +307,7 @@
         // ユーザープロフィールを読み込み
         async function loadUserProfile(userId) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseDb
                     .from('users')
                     .select('*')
                     .eq('id', userId)
@@ -343,7 +343,7 @@
         // セミナー予約を読み込み
         async function loadSeminarBookings(userId) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseDb
                     .from('seminar_bookings')
                     .select(`
                         *,
@@ -369,7 +369,7 @@
         // イベント予約を読み込み
         async function loadEventBookings(userId) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseDb
                     .from('event_bookings')
                     .select(`
                         *,
@@ -395,7 +395,7 @@
         // 個別相談予約を読み込み
         async function loadConsultationBookings(userId) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseDb
                     .from('consultation_bookings')
                     .select('*')
                     .eq('user_id', userId)
@@ -468,7 +468,7 @@
                             'consultation_bookings';
 
             try {
-                const { error } = await supabase
+                const { error } = await supabaseDb
                     .from(tableName)
                     .update({ status: 'cancelled' })
                     .eq('id', bookingId);

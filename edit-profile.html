@@ -257,7 +257,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabaseDb/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/language.min.js"></script>
     <script>
@@ -280,7 +280,7 @@
         // ユーザープロフィールを読み込み
         async function loadUserProfile(userId) {
             try {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseDb
                     .from('users')
                     .select('*')
                     .eq('id', userId)
@@ -327,7 +327,7 @@
             };
 
             try {
-                const { error } = await supabase
+                const { error } = await supabaseDb
                     .from('users')
                     .update(formData)
                     .eq('id', currentUser.id);
