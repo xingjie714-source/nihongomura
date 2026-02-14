@@ -1,0 +1,437 @@
+/* ============================================
+   イベントページ専用スタイル
+   ============================================ */
+
+/* ヒーローセクション */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('https://images.unsplash.com/photo-1511578314322-379afb476865?w=1600') center/cover;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.hero-overlay h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.hero-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* コンテナ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* イベント一覧セクション */
+.events-list-section {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.events-list-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.events-list {
+    display: grid;
+    gap: 2rem;
+}
+
+/* イベントカード */
+.event-card {
+    display: flex;
+    background-color: #FFF8F0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.event-image {
+    width: 35%;
+    min-height: 280px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--light-gray);
+}
+
+.event-content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.event-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    background-color: #E8F5E9;
+    color: #4CAF50;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.tag.online {
+    background-color: #E3F2FD;
+    color: #2196F3;
+}
+
+.tag.onsite {
+    background-color: #FFF3E0;
+    color: #FF9800;
+}
+
+.tag.stem {
+    background-color: #F3E5F5;
+    color: #9C27B0;
+}
+
+.event-title {
+    font-size: 1.4rem;
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.event-description {
+    color: var(--medium-gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.event-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 6px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--dark-gray);
+    min-width: 100px;
+}
+
+.detail-value {
+    color: var(--medium-gray);
+}
+
+.event-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-details {
+    background-color: #E91E63;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-details:hover {
+    background-color: #C2185B;
+}
+
+/* イベント詳細ページ */
+.event-detail-page {
+    background-color: var(--light-gray);
+}
+
+.event-detail-hero {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.event-detail-header {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.event-detail-image {
+    width: 400px;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.event-detail-info {
+    flex: 1;
+}
+
+.event-detail-title {
+    font-size: 2rem;
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.event-detail-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.event-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    background-color: var(--light-gray);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.meta-label {
+    font-size: 0.9rem;
+    color: var(--medium-gray);
+    font-weight: 500;
+}
+
+.meta-value {
+    font-size: 1.1rem;
+    color: var(--dark-gray);
+    font-weight: 600;
+}
+
+.event-detail-content {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.content-section {
+    margin-bottom: 3rem;
+}
+
+.content-section h2 {
+    font-size: 1.8rem;
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--primary-orange);
+}
+
+.content-section p {
+    color: var(--medium-gray);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.content-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.content-section li {
+    color: var(--medium-gray);
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.content-section li::before {
+    content: "✓";
+    color: var(--primary-orange);
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+}
+
+.apply-section {
+    background-color: var(--light-gray);
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.apply-section h2 {
+    font-size: 2rem;
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+}
+
+.apply-section p {
+    color: var(--medium-gray);
+    margin-bottom: 2rem;
+}
+
+.btn-apply-large {
+    background-color: #E91E63;
+    color: white;
+    padding: 1.2rem 3rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-apply-large:hover {
+    background-color: #C2185B;
+    transform: scale(1.05);
+}
+
+/* 参加の流れ */
+.flow-section {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.flow-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.flow-steps {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.flow-step {
+    flex: 1;
+    min-width: 200px;
+    background-color: var(--light-gray);
+    padding: 2rem 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flow-step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background-color: #E91E63;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 1rem;
+}
+
+.flow-step h3 {
+    color: var(--dark-gray);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.flow-step p {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .hero-overlay h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-overlay p {
+        font-size: 1rem;
+    }
+
+    .event-card {
+        flex-direction: column;
+    }
+
+    .event-image {
+        width: 100%;
+        min-height: 200px;
+    }
+
+    .event-details {
+        grid-template-columns: 1fr;
+    }
+
+    .event-content {
+        padding: 1.5rem;
+    }
+
+    .event-detail-header {
+        flex-direction: column;
+    }
+
+    .event-detail-image {
+        width: 100%;
+        height: 250px;
+    }
+
+    .event-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .flow-steps {
+        flex-direction: column;
+    }
+
+    .flow-step {
+        min-width: 100%;
+    }
+}
+
+/* フッター */
+/* フッタースタイルはcommon.cssで管理 */

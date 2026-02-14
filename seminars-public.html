@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ja="セミナー - 日本語村" data-en="Seminars - NIHONGOMURA" data-zh="研讨会 - 日本语村">セミナー - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/seminars.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-container">
+            <!-- ロゴ -->
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="日本語村 ロゴ">
+            </a>
+            <!-- モバイルメニュートグル -->
+            <button class="mobile-menu-toggle" aria-label="メニュー">
+                <i class="fas fa-bars"></i>
+            </button>
+            <!-- ナビゲーションメニュー -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a></li>
+                    <li><a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a></li>
+                    <li><a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a></li>
+                    <li><a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a></li>
+                    <li><a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a></li>
+                </ul>
+            </nav>
+            <!-- 右側のアクション -->
+            <div class="header-actions">
+                <!-- 言語選択 -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ja">日本語</button>
+                    <span class="separator">/</span>
+                    <button class="lang-btn" data-lang="en">English</button>
+                    <span class="separator">/</span>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+                <!-- 認証ボタン -->
+                <div class="auth-buttons">
+                    <a href="auth.html" class="btn-login" data-ja="ログイン" data-en="Login" data-zh="登录">ログイン</a>
+                    <a href="auth.html" class="btn-register" data-ja="無料会員登録" data-en="Free Registration" data-zh="免费注册">無料会員登録</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="seminars-page">
+        <!-- ヒーローセクション -->
+        <section class="hero-section">
+            <div class="hero-overlay">
+                <h1 data-ja="就活セミナー" data-en="Job Hunting Seminars" data-zh="就业研讨会">就活セミナー</h1>
+                <p data-ja="留学生のための就職活動支援セミナー" data-en="Career support seminars for international students" data-zh="为留学生提供的就业支援研讨会">留学生のための就職活動支援セミナー</p>
+            </div>
+        </section>
+
+        <!-- カレンダーセクション -->
+        <section class="calendar-section">
+            <div class="container">
+                <h2 data-ja="セミナーカレンダー" data-en="Seminar Calendar" data-zh="研讨会日历">セミナーカレンダー</h2>
+                <div id="calendar"></div>
+            </div>
+        </section>
+
+        <!-- セミナー受講ロードマップ -->
+        <section class="roadmap-section">
+            <div class="container">
+                <h2 data-ja="セミナー受講ロードマップ（3段階）" data-en="Seminar Roadmap (3 Levels)" data-zh="研讨会学习路线图（3阶段）">セミナー受講ロードマップ（3段階）</h2>
+                <div class="roadmap-container">
+                    <!-- 初心者レベル -->
+                    <div class="roadmap-level">
+                        <div class="level-header beginner">
+                            <i class="fas fa-seedling"></i>
+                            <h3 data-ja="初心者" data-en="Beginner" data-zh="初学者">初心者</h3>
+                        </div>
+                        <div class="level-content">
+                            <h4 data-ja="就活基礎セミナー" data-en="Basic Career Seminar" data-zh="就业基础研讨会">就活基礎セミナー</h4>
+                            <ul>
+                                <li data-ja="就活の全体像" data-en="Overview of job hunting" data-zh="就业活动全貌">就活の全体像</li>
+                                <li data-ja="ES/面接の基本" data-en="Basics of ES/Interview" data-zh="ES/面试基础">ES/面接の基本</li>
+                                <li data-ja="次に何をするか" data-en="What to do next" data-zh="接下来做什么">次に何をするか</li>
+                            </ul>
+                            <div class="level-tags">
+                                <span class="tag" data-ja="初心者歓迎" data-en="Beginner Welcome" data-zh="欢迎初学者">初心者歓迎</span>
+                                <span class="tag" data-ja="N5～OK" data-en="N5～OK" data-zh="N5～OK">N5～OK</span>
+                                <span class="tag" data-ja="英語OK" data-en="English OK" data-zh="英语OK">英語OK</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 矢印 -->
+                    <div class="roadmap-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                    <!-- 中級レベル -->
+                    <div class="roadmap-level">
+                        <div class="level-header intermediate">
+                            <i class="fas fa-compass"></i>
+                            <h3 data-ja="中級" data-en="Intermediate" data-zh="中级">中級</h3>
+                        </div>
+                        <div class="level-content">
+                            <h4 data-ja="自己分析セミナー" data-en="Self-Analysis Seminar" data-zh="自我分析研讨会">自己分析セミナー</h4>
+                            <ul>
+                                <li data-ja="強み/価値観" data-en="Strengths/Values" data-zh="优势/价值观">強み/価値観</li>
+                                <li data-ja="自己PR素材" data-en="Self-PR Materials" data-zh="自我PR素材">自己PR素材</li>
+                                <li data-ja="志望動機の土台" data-en="Motivation Foundation" data-zh="志愿动机基础">志望動機の土台</li>
+                            </ul>
+                            <div class="level-tags">
+                                <span class="tag highlight" data-ja="N3～推奨" data-en="N3～Recommended" data-zh="推荐N3～">N3～推奨</span>
+                                <span class="tag" data-ja="ワークあり" data-en="Workshop" data-zh="有作业">ワークあり</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 矢印 -->
+                    <div class="roadmap-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
+                    <!-- 上級レベル -->
+                    <div class="roadmap-level">
+                        <div class="level-header advanced">
+                            <i class="fas fa-trophy"></i>
+                            <h3 data-ja="上級" data-en="Advanced" data-zh="高级">上級</h3>
+                        </div>
+                        <div class="level-content">
+                            <h4 data-ja="実戦対策セミナー" data-en="Practical Strategy Seminar" data-zh="实战对策研讨会">実戦対策セミナー</h4>
+                            <ul>
+                                <li data-ja="業界・企業分析" data-en="Industry/Company Analysis" data-zh="行业·企业分析">業界・企業分析</li>
+                                <li data-ja="グループディスカッション" data-en="Group Discussion" data-zh="小组讨论">グループディスカッション</li>
+                                <li data-ja="模擬面接" data-en="Mock Interview" data-zh="模拟面试">模擬面接</li>
+                            </ul>
+                            <div class="level-tags">
+                                <span class="tag highlight" data-ja="実践" data-en="Practical" data-zh="实践">実践</span>
+                                <span class="tag" data-ja="N2～" data-en="N2～" data-zh="N2～">N2～</span>
+                                <span class="tag" data-ja="日本語中心" data-en="Japanese Focus" data-zh="以日语为主">日本語中心</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- セミナー一覧 -->
+        <section class="seminars-list-section">
+            <div class="container">
+                <h2 data-ja="開催予定のセミナー" data-en="Upcoming Seminars" data-zh="即将举办的研讨会">開催予定のセミナー</h2>
+                <div id="seminars-list" class="seminars-list">
+                    <!-- セミナーカードがJavaScriptで動的に生成されます -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+                <span>|</span>
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+                <span>|</span>
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <!-- カスタムJS -->
+    <script src="js/header.js"></script>
+    <script src="js/seminars.js"></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+/* ============================================
+   個別相談ページ専用スタイル
+   ============================================ */
+
+/* ヒーローセクション */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1600') center/cover;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.hero-overlay h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.hero-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* コンテナ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* 相談メニューセクション */
+.consultation-menu-section {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.consultation-menu-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.consultation-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* 相談カード */
+.consultation-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid var(--primary-orange);
+}
+
+.consultation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.consultation-icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-orange);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.consultation-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.consultation-card h3 {
+    font-size: 1.4rem;
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+}
+
+.consultation-card p {
+    color: var(--medium-gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.recommended-for {
+    background-color: var(--light-gray);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+}
+
+.recommended-for h4 {
+    font-size: 0.95rem;
+    color: var(--dark-gray);
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.recommended-for ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.recommended-for li {
+    color: var(--medium-gray);
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.9rem;
+}
+
+.recommended-for li::before {
+    content: "✓";
+    color: var(--primary-orange);
+    font-weight: 700;
+    position: absolute;
+    left: 0;
+}
+
+.btn-book {
+    background-color: var(--primary-orange);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-book:hover {
+    background-color: var(--secondary-orange);
+}
+
+/* 相談形式セクション */
+.consultation-format-section {
+    background-color: var(--light-gray);
+    padding: 3rem 0;
+}
+
+.consultation-format-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.format-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.format-item {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.format-item i {
+    font-size: 2.5rem;
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+}
+
+.format-item h3 {
+    font-size: 1.2rem;
+    color: var(--dark-gray);
+    margin-bottom: 0.8rem;
+}
+
+.format-item p {
+    color: var(--medium-gray);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* 注意書きセクション */
+.notice-section {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.notice-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.notice-content {
+    background-color: #FFF9E6;
+    border-left: 4px solid #FFC107;
+    padding: 2rem;
+    border-radius: 6px;
+}
+
+.notice-content h3 {
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.notice-content p {
+    color: var(--medium-gray);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.notice-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.notice-content li {
+    color: var(--medium-gray);
+    margin-bottom: 0.8rem;
+    padding-left: 1.8rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.notice-content li::before {
+    content: "•";
+    color: #FFC107;
+    font-weight: 700;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -0.2rem;
+}
+
+/* 参加の流れ */
+.flow-section {
+    background-color: var(--light-gray);
+    padding: 3rem 0;
+}
+
+.flow-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.flow-steps {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.flow-step {
+    flex: 1;
+    min-width: 180px;
+    background-color: white;
+    padding: 2rem 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flow-step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-orange);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 1rem;
+}
+
+.flow-step h3 {
+    color: var(--dark-gray);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.flow-step p {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .hero-overlay h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-overlay p {
+        font-size: 1rem;
+    }
+
+    .consultation-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .format-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .flow-steps {
+        flex-direction: column;
+    }
+
+    .flow-step {
+        min-width: 100%;
+    }
+}
+
+/* フッター */
+/* フッタースタイルはcommon.cssで管理 */
+
+/* カレンダーセクション */
+.calendar-section {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.calendar-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.calendar-description {
+    text-align: center;
+    color: var(--medium-gray);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+#calendar {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* FullCalendar カスタマイズ */
+.fc {
+    font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+}
+
+.fc-event {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
+    cursor: pointer;
+}
+
+.fc-event:hover {
+    background-color: var(--secondary-orange);
+    border-color: var(--secondary-orange);
+}
+
+.fc-button-primary {
+    background-color: var(--primary-orange) !important;
+    border-color: var(--primary-orange) !important;
+}
+
+.fc-button-primary:hover {
+    background-color: var(--secondary-orange) !important;
+    border-color: var(--secondary-orange) !important;
+}
+
+.fc-button-primary:disabled {
+    background-color: var(--medium-gray) !important;
+    border-color: var(--medium-gray) !important;
+}
+
+/* 予約ボタンコンテナ */
+.booking-button-container {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.btn-booking {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background-color: var(--primary-orange);
+    color: white;
+    padding: 1.2rem 3rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.btn-booking:hover {
+    background-color: var(--secondary-orange);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.btn-booking i {
+    font-size: 1.5rem;
+}

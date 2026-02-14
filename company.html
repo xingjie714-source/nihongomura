@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ja="運営会社 - 日本語村" data-en="Company - NIHONGOMURA" data-zh="运营公司 - 日本语村">運営会社 - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .company-hero {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.9), rgba(255, 140, 66, 0.9));
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .company-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .company-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+            min-height: 400px;
+        }
+        
+        .company-content {
+            background: white;
+            padding: 60px 50px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .company-content .icon {
+            font-size: 4rem;
+            color: var(--primary-orange);
+            margin-bottom: 30px;
+        }
+        
+        .company-content h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .company-content p {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 2;
+            margin-bottom: 40px;
+        }
+        
+        .company-info {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 8px;
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .company-info h3 {
+            color: var(--primary-orange);
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .info-table tr {
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .info-table tr:last-child {
+            border-bottom: none;
+        }
+        
+        .info-table th {
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            width: 150px;
+            vertical-align: top;
+        }
+        
+        .info-table td {
+            padding: 15px 20px;
+            color: #555;
+        }
+        
+        @media (max-width: 768px) {
+            .company-content {
+                padding: 40px 30px;
+            }
+            
+            .info-table {
+                display: block;
+            }
+            
+            .info-table tr {
+                display: block;
+                margin-bottom: 15px;
+            }
+            
+            .info-table th,
+            .info-table td {
+                display: block;
+                width: 100%;
+                padding: 5px 0;
+            }
+            
+            .info-table th {
+                font-weight: 600;
+                color: var(--primary-orange);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="日本語村">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a>
+                <a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a>
+                <a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a>
+                <a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a>
+                <a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a>
+            </nav>
+            <div class="header-actions">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ja">日本語</button>
+                    <span>/</span>
+                    <button class="lang-btn" data-lang="en">English</button>
+                    <span>/</span>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+                <a href="auth.html" class="btn-login" data-ja="ログイン" data-en="Login" data-zh="登录">ログイン</a>
+                <a href="auth.html" class="btn-register" data-ja="無料会員登録" data-en="Free Registration" data-zh="免费注册">無料会員登録</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="company-hero">
+        <h1 data-ja="運営会社" data-en="Company Information" data-zh="运营公司">運営会社</h1>
+    </section>
+
+    <!-- 運営会社情報 -->
+    <div class="company-container">
+        <div class="company-content">
+            <div class="icon">
+                <i class="fas fa-building"></i>
+            </div>
+            
+            <div class="company-info">
+                <h3 data-ja="会社情報" data-en="Company Information" data-zh="公司信息">会社情報</h3>
+                <table class="info-table">
+                    <tr>
+                        <th data-ja="会社名" data-en="Company Name" data-zh="公司名称">会社名</th>
+                        <td>株式会社At One</td>
+                    </tr>
+                    <tr>
+                        <th data-ja="代表者" data-en="Representative" data-zh="代表人">代表者</th>
+                        <td data-ja="代表取締役 邢傑" data-en="CEO: Xing Jie" data-zh="代表董事 邢杰">代表取締役 邢傑</td>
+                    </tr>
+                    <tr>
+                        <th data-ja="事業内容" data-en="Business" data-zh="业务内容">事業内容</th>
+                        <td data-ja="留学生向け就職支援プラットフォーム「日本語村」の運営" 
+                            data-en="Operation of job support platform 'NIHONGOMURA' for international students" 
+                            data-zh="面向留学生的就业支援平台"日本语村"的运营">
+                            留学生向け就職支援プラットフォーム「日本語村」の運営
+                        </td>
+                    </tr>
+                    <tr>
+                        <th data-ja="お問い合わせ" data-en="Contact" data-zh="联系方式">お問い合わせ</th>
+                        <td>
+                            <p>TEL: 070-5520-7818</p>
+                            <p>E-mail: info@nihongomura.jp</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <p style="margin-top: 40px; font-size: 1rem; color: #999;">
+                <span data-ja="※詳細な会社情報は準備中です。" 
+                      data-en="* Detailed company information is under preparation." 
+                      data-zh="※详细公司信息准备中。">
+                    ※詳細な会社情報は準備中です。
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+                <span>|</span>
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+                <span>|</span>
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+</body>
+</html>

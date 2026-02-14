@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ja="会員登録完了 - 日本語村" data-en="Registration Complete - NIHONGOMURA" data-zh="注册完成 - 日本语村">会員登録完了 - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .complete-container {
+            max-width: 700px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .success-icon i {
+            font-size: 4rem;
+            color: white;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .complete-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+        }
+
+        .complete-message {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .info-box {
+            background: #F5F5F5;
+            border-left: 4px solid var(--primary-orange);
+            padding: 1.5rem;
+            text-align: left;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-box h3 i {
+            color: var(--primary-orange);
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-box li {
+            padding: 0.5rem 0;
+            color: var(--medium-gray);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .info-box li i {
+            color: var(--primary-orange);
+            margin-top: 0.3rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-orange);
+            border: 2px solid var(--primary-orange);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #FFE5D9, #FFD4C4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon i {
+            font-size: 1.8rem;
+            color: var(--primary-orange);
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo"><img src="images/logo.png" alt="日本語村 ロゴ"></a>
+            <button class="mobile-menu-toggle" aria-label="メニュー"><i class="fas fa-bars"></i></button>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a></li>
+                    <li><a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a></li>
+                    <li><a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a></li>
+                    <li><a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a></li>
+                    <li><a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ja">日本語</button><span class="separator">/</span>
+                    <button class="lang-btn" data-lang="en">English</button><span class="separator">/</span>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <div class="complete-container">
+            <!-- 成功アイコン -->
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+
+            <!-- タイトル -->
+            <h1 class="complete-title" data-ja="会員登録が完了しました！" data-en="Registration Complete!" data-zh="注册完成！">会員登録が完了しました！</h1>
+
+            <!-- メッセージ -->
+            <p class="complete-message" data-ja="日本語村へようこそ！ご登録いただきありがとうございます。" data-en="Welcome to NIHONGOMURA! Thank you for registering." data-zh="欢迎来到日本语村！感谢您的注册。">
+                日本語村へようこそ！ご登録いただきありがとうございます。
+            </p>
+
+            <!-- 重要な情報 -->
+            <div class="info-box">
+                <h3>
+                    <i class="fas fa-info-circle"></i>
+                    <span data-ja="次のステップ" data-en="Next Steps" data-zh="下一步">次のステップ</span>
+                </h3>
+                <ul>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <span data-ja="ご登録いただいたメールアドレスに確認メールをお送りしました。メールをご確認ください。" 
+                              data-en="We've sent a confirmation email to your registered email address. Please check your email." 
+                              data-zh="我们已向您注册的邮箱发送了确认邮件。请查收邮件。">
+                            ご登録いただいたメールアドレスに確認メールをお送りしました。メールをご確認ください。
+                        </span>
+                    </li>
+                    <li>
+                        <i class="fas fa-user-circle"></i>
+                        <span data-ja="マイページからプロフィールを編集したり、セミナーやイベントに申し込むことができます。" 
+                              data-en="You can edit your profile and apply for seminars and events from My Page." 
+                              data-zh="您可以从个人主页编辑个人资料并申请研讨会和活动。">
+                            マイページからプロフィールを編集したり、セミナーやイベントに申し込むことができます。
+                        </span>
+                    </li>
+                    <li>
+                        <i class="fas fa-briefcase"></i>
+                        <span data-ja="求人検索で、あなたにぴったりの仕事を見つけましょう。" 
+                              data-en="Find the perfect job for you with our job search feature." 
+                              data-zh="通过职位搜索功能找到适合您的工作。">
+                            求人検索で、あなたにぴったりの仕事を見つけましょう。
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- アクションボタン -->
+            <div class="action-buttons">
+                <a href="auth.html" class="btn btn-primary" data-ja="ログインする" data-en="Login" data-zh="登录">ログインする</a>
+                <a href="index.html" class="btn btn-secondary" data-ja="トップページへ" data-en="Go to Home" data-zh="返回首页">トップページへ</a>
+            </div>
+
+            <!-- 機能紹介 -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="feature-title" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</h3>
+                    <p class="feature-desc" data-ja="就職活動に役立つセミナーに参加できます" data-en="Attend seminars helpful for job hunting" data-zh="参加对求职有帮助的研讨会">
+                        就職活動に役立つセミナーに参加できます
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="feature-title" data-ja="イベント" data-en="Events" data-zh="活动">イベント</h3>
+                    <p class="feature-desc" data-ja="企業説明会や交流会に参加できます" data-en="Join company briefings and networking events" data-zh="参加公司说明会和交流活动">
+                        企業説明会や交流会に参加できます
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="feature-title" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</h3>
+                    <p class="feature-desc" data-ja="キャリアアドバイザーに相談できます" data-en="Consult with career advisors" data-zh="咨询职业顾问">
+                        キャリアアドバイザーに相談できます
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="feature-title" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</h3>
+                    <p class="feature-desc" data-ja="あなたに合った求人を探せます" data-en="Find jobs that match your profile" data-zh="搜索适合您的职位">
+                        あなたに合った求人を探せます
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+                <span>|</span>
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+                <span>|</span>
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+</body>
+</html>

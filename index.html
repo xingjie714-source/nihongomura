@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-en="NIHONGOMURA - International Student Career Portal" data-ja="日本語村 - 留学生就職支援ポータル" data-zh="日本语村 - 留学生就业支援门户">日本語村 - 留学生就職支援ポータル</title>
+<link href="css/common.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+/* サービスカードグリッド */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.card {
+    background: var(--white);
+    border-left: 4px solid var(--primary-orange);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+}
+
+.card-description {
+    color: var(--medium-gray);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.btn-secondary {
+    display: inline-block;
+    color: var(--dark-gray);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    color: var(--primary-orange);
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+</style>
+</head>
+<body>
+<!-- ヘッダー -->
+<header>
+<div class="header-container">
+<!-- ロゴ -->
+<a class="logo" href="index.html">
+<img alt="日本語村 ロゴ" src="images/logo.png"/>
+</a>
+<!-- モバイルメニュートグル -->
+<button aria-label="メニュー" class="mobile-menu-toggle">
+<i class="fas fa-bars"></i>
+</button>
+<!-- ナビゲーションメニュー -->
+<nav>
+<ul class="nav-menu">
+<li><a data-en="Seminars" data-ja="セミナー" data-zh="研讨会" href="seminars-public.html">セミナー</a></li>
+<li><a data-en="Events" data-ja="イベント" data-zh="活动" href="events-public.html">イベント</a></li>
+<li><a data-en="Consultations" data-ja="個別相談" data-zh="个别咨询" href="consultations-public.html">個別相談</a></li>
+<li><a data-en="Job Search" data-ja="求人検索" data-zh="职位搜索" href="jobs-public.html">求人検索</a></li>
+<li><a data-en="Career Knowledge" data-ja="就職知識" data-zh="就业知识" href="knowledge.html">就職知識</a></li>
+</ul>
+</nav>
+<!-- 右側のアクション -->
+<div class="header-actions">
+		<!-- 言語選択 -->
+		<div class="language-switcher">
+		<button class="lang-btn active" data-lang="ja">日本語</button>
+		<span class="separator">/</span>
+		<button class="lang-btn" data-lang="en">English</button>
+		<span class="separator">/</span>
+		<button class="lang-btn" data-lang="zh">中文</button>
+		</div>
+<!-- 認証ボタン -->
+<div class="auth-buttons">
+<a class="btn-login" data-en="Login" data-ja="ログイン" data-zh="登录" href="auth.html">ログイン</a>
+<a class="btn-register" data-en="Free Registration" data-ja="無料会員登録" data-zh="免费注册" href="auth.html">無料会員登録</a>
+</div>
+</div>
+</div>
+</header>
+<!-- メインコンテンツ -->
+<main>
+<!-- ヒーローセクション -->
+<section style="background: linear-gradient(135deg, var(--primary-orange), var(--accent-orange)); color: white; padding: 4rem 2rem; text-align: center;">
+<div class="container">
+<h1 data-en="From Japanese Universities to the Future" data-ja="日本の大学から、未来へ" data-zh="从日本大学到未来" style="font-size: 3rem; margin-bottom: 1rem; line-height: 1.3;">日本の大学から、未来へ</h1>
+<p style="font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600;" data-en="Supporting International Students' Career in Japan, Closest to You" data-ja="留学生の「日本で働く」を一番近くで支える。" data-zh="最近距离支持留学生在日本工作">留学生の「日本で働く」を一番近くで支える。</p>
+<p data-en="NIHONGOMURA is a career support portal for international students, born from Japanese universities. We provide comprehensive free support from zero knowledge to job offer, with close university collaboration." data-ja="日本語村は、日本の大学から誕生した留学生専用の就職支援ポータルです。大学と密着した手厚いサポートで、知識ゼロから内定まで、あなたの挑戦を完全に無料でバックアップします。" data-zh="日本语村是从日本大学诞生的留学生专用就业支援门户。通过与大学的紧密合作，从零知识到获得offer，全程免费支持您的挑战。" style="font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8;">日本語村は、日本の大学から誕生した留学生専用の就職支援ポータルです。大学と密着した手厚いサポートで、知識ゼロから内定まで、あなたの挑戦を完全に無料でバックアップします。</p>
+<a class="btn" data-en="Register Now for Free" data-ja="今すぐ無料登録" data-zh="立即免费注册" href="auth.html" style="background: white; color: var(--primary-orange); font-size: 1.2rem; padding: 1rem 3rem; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease;">今すぐ無料登録</a>
+<p class="hero-trust" style="font-size: 0.95rem; margin-top: 1rem; opacity: 0.9;" data-en="Reliable support from Japanese universities (Completely free)" data-ja="大学発の安心サポート（完全無料）" data-zh="大学的可靠支持（完全免费）">大学発の安心サポート（完全無料）</p>
+</div>
+</section>
+
+<!-- 5つの特徴セクション -->
+<section class="features-section" style="background: var(--light-gray); padding: 4rem 2rem;">
+<div class="container">
+<h2 class="section-title" data-en="5 Reasons to Choose NIHONGOMURA" data-ja="日本語村が選ばれる5つの理由" data-zh="选择日本语村的5个理由" style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">日本語村が選ばれる5つの理由</h2>
+<div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+<!-- 特徴1: 全サービス無料 -->
+<div class="feature-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+<div class="feature-icon" style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-gift"></i>
+</div>
+<h3 data-en="All Services Free" data-ja="全サービス無料" data-zh="所有服务免费" style="font-size: 1.3rem; margin-bottom: 0.5rem;">全サービス無料</h3>
+<p class="feature-subtitle" data-en="Forever, 0 yen" data-ja="ずっと、0円" data-zh="永远0日元" style="font-size: 0.95rem; color: var(--primary-orange); font-weight: bold; margin-bottom: 1rem;">「ずっと、0円」</p>
+<p data-en="No additional fees from registration to job offer" data-ja="登録から内定まで、追加費用は一切かかりません。" data-zh="从注册到获得offer，不收取任何额外费用。" style="color: var(--medium-gray); line-height: 1.6;">登録から内定まで、追加費用は一切かかりません。</p>
+</div>
+<!-- 特徴2: 国立大学発 -->
+<div class="feature-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+<div class="feature-icon" style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-university"></i>
+</div>
+<h3 data-en="From Universities" data-ja="大学発" data-zh="大学出身" style="font-size: 1.3rem; margin-bottom: 0.5rem;">大学発</h3>
+<p class="feature-subtitle" data-en="Reliable Trust" data-ja="確かな信頼" data-zh="可靠信任" style="font-size: 0.95rem; color: var(--primary-orange); font-weight: bold; margin-bottom: 1rem;">「確かな信頼」</p>
+<p data-en="Fair and reliable service born from Japanese universities" data-ja="日本の大学から生まれた、公正で安心なサービスです。" data-zh="源自日本大学，公正可靠的服务。" style="color: var(--medium-gray); line-height: 1.6;">日本の大学から生まれた、公正で安心なサービスです。</p>
+</div>
+<!-- 特徴3: 大学と密着 -->
+<div class="feature-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+<div class="feature-icon" style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-handshake"></i>
+</div>
+<h3 data-en="Close University Collaboration" data-ja="大学と密着" data-zh="与大学紧密合作" style="font-size: 1.3rem; margin-bottom: 0.5rem;">大学と密着</h3>
+<p class="feature-subtitle" data-en="Support Alongside You" data-ja="並走するサポート" data-zh="一路陪伴的支持" style="font-size: 0.95rem; color: var(--primary-orange); font-weight: bold; margin-bottom: 1rem;">「並走するサポート」</p>
+<p data-en="Like university career support, we deeply care for each individual" data-ja="大学のキャリア支援のように、一人ひとりに深く寄り添います。" data-zh="像大学职业支持一样，深入关怀每一个人。" style="color: var(--medium-gray); line-height: 1.6;">大学のキャリア支援のように、一人ひとりに深く寄り添います。</p>
+</div>
+<!-- 特徴4: 厳選された企業 -->
+<div class="feature-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+<div class="feature-icon" style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-building"></i>
+</div>
+<h3 data-en="Carefully Selected Companies" data-ja="厳選された企業" data-zh="精选企业" style="font-size: 1.3rem; margin-bottom: 0.5rem;">厳選された企業</h3>
+<p class="feature-subtitle" data-en="Only Serious Job Offers" data-ja="本気の求人だけ" data-zh="只有认真的招聘" style="font-size: 0.95rem; color: var(--primary-orange); font-weight: bold; margin-bottom: 1rem;">「本気の求人だけ」</p>
+<p data-en="Carefully selected companies that truly need international students" data-ja="留学生を本当に必要とする、意欲ある企業を厳選しました。" data-zh="精选真正需要留学生的积极企业。" style="color: var(--medium-gray); line-height: 1.6;">留学生を本当に必要とする、意欲ある企業を厳選しました。</p>
+</div>
+<!-- 特徴5: 知識の宝庫 -->
+<div class="feature-card" style="background: white; padding: 2rem; border-radius: 10px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+<div class="feature-icon" style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-book-open"></i>
+</div>
+<h3 data-en="Treasure Trove of Knowledge" data-ja="知識の宝庫" data-zh="知识宝库" style="font-size: 1.3rem; margin-bottom: 0.5rem;">知識の宝庫</h3>
+<p class="feature-subtitle" data-en="Everything You Need Here" data-ja="ここで全部わかる" data-zh="这里全部了解" style="font-size: 0.95rem; color: var(--primary-orange); font-weight: bold; margin-bottom: 1rem;">「ここで全部わかる」</p>
+<p data-en="All job hunting knowledge from visa to manners in one place" data-ja="ビザからマナーまで、就活の知識はこれ一つで完璧。" data-zh="从签证到礼仪，求职知识一站式掌握。" style="color: var(--medium-gray); line-height: 1.6;">ビザからマナーまで、就活の知識はこれ一つで完璧。</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- サービス紹介 -->
+<section class="container" style="margin-top: 4rem;">
+<h2 class="page-title" data-en="What You Can Do with NIHONGOMURA" data-ja="日本語村でできること" data-zh="在日本语村可以做什么">日本語村でできること</h2>
+<p class="page-description" data-en="All the support you need for your job search, right here" data-ja="就職活動に必要なサポートを、すべてここで" data-zh="所有您需要的求职支持，尽在这里">就職活動に必要なサポートを、すべてここで</p>
+<div class="card-grid">
+<!-- セミナー -->
+<div class="card">
+<div style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-video"></i>
+</div>
+<h3 class="card-title" data-en="Job Hunting Seminar Videos" data-ja="就活セミナー動画" data-zh="求职研讨会视频">就活セミナー動画</h3>
+<p class="card-description" data-en="Various seminar videos on resume writing, interview preparation, business etiquette, and more" data-ja="履歴書の書き方、面接対策、ビジネスマナーなど、就職活動に役立つセミナー動画を多数ご用意" data-zh="提供众多关于简历写作、面试准备、商务礼仪等求职活动的研讨会视频">履歴書の書き方、面接対策、ビジネスマナーなど、就職活動に役立つセミナー動画を多数ご用意</p>
+<a class="btn-secondary" data-en="View Seminars" data-ja="セミナーを見る" data-zh="查看研讨会" href="seminars-public.html">セミナーを見る</a>
+</div>
+<!-- イベント -->
+<div class="card">
+<div style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-calendar-alt"></i>
+</div>
+<h3 class="card-title" data-en="Career Events" data-ja="就活イベント" data-zh="求职活动">就活イベント</h3>
+<p class="card-description" data-en="Company briefings, career fairs, networking events - direct connections with companies" data-ja="企業説明会、就活フェア、ネットワーキングイベントなど、企業と直接つながるチャンス" data-zh="公司说明会、求职博览会、社交活动等，与公司直接联系的机会">企業説明会、就活フェア、ネットワーキングイベントなど、企業と直接つながるチャンス</p>
+<a class="btn-secondary" data-en="View Events" data-ja="イベント一覧" data-zh="活动列表" href="events-public.html">イベント一覧</a>
+</div>
+<!-- 個別相談 -->
+<div class="card">
+<div style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-comments"></i>
+</div>
+<h3 class="card-title" data-en="Personal Consultations" data-ja="個別相談" data-zh="个别咨询">個別相談</h3>
+<p class="card-description" data-en="Career advisors provide personalized support for your job search. Easy online consultations" data-ja="キャリアアドバイザーがあなたの就職活動を個別にサポート。オンラインで気軽に相談できます" data-zh="职业顾问为您的求职活动提供个性化支持。可轻松在线咨询">キャリアアドバイザーがあなたの就職活動を個別にサポート。オンラインで気軽に相談できます</p>
+<a class="btn-secondary" data-en="Book Consultation" data-ja="相談予約" data-zh="预约咨询" href="consultations-public.html">相談予約</a>
+</div>
+<!-- 求人検索 -->
+<div class="card">
+<div style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+<i class="fas fa-briefcase"></i>
+</div>
+<h3 class="card-title" data-en="Job Search" data-ja="求人検索" data-zh="职位搜索">求人検索</h3>
+<p class="card-description" data-en="Many job postings welcoming international students. Filter by visa support, Japanese level, and more" data-ja="留学生歓迎の求人情報を多数掲載。ビザサポートあり、日本語レベル別など、条件で絞り込み可能" data-zh="刊登众多欢迎留学生的职位信息。可按签证支持、日语水平等条件筛选">留学生歓迎の求人情報を多数掲載。ビザサポートあり、日本語レベル別など、条件で絞り込み可能</p>
+	<a class="btn-secondary" data-en="Search Jobs" data-ja="求人を探す" data-zh="搜索职位" href="jobs-public.html">求人を探す</a>
+	</div>
+	<!-- 就職知識 -->
+	<div class="card">
+	<div style="font-size: 3rem; color: var(--primary-orange); margin-bottom: 1rem;">
+	<i class="fas fa-book-open"></i>
+	</div>
+	<h3 class="card-title" data-en="Job Hunting Knowledge" data-ja="就職知識" data-zh="就业知识">就職知識</h3>
+	<p class="card-description" data-en="Comprehensive job hunting knowledge from visa to manners. Articles and guides for international students" data-ja="ビザからマナーまで、就活の知識を網羅。留学生向けの記事やガイドを多数掲載" data-zh="从签证到礼仪，全面的求职知识。为留学生提供众多文章和指南">ビザからマナーまで、就活の知識を網羅。留学生向けの記事やガイドを多数掲載</p>
+	<a class="btn-secondary" data-en="Read Articles" data-ja="記事を読む" data-zh="阅读文章" href="knowledge.html">記事を読む</a>
+	</div>
+	</div>
+	</section>
+<!-- CTA -->
+<section style="background-color: var(--primary-orange); padding: 4rem 2rem; text-align: center; margin-top: 4rem;">
+<div class="container">
+<h2 data-en="Get Started Now" data-ja="今すぐ始めよう" data-zh="立即开始" style="font-size: 2.5rem; margin-bottom: 1rem; color: white;">今すぐ始めよう</h2>
+<p data-en="Registration is free. Sign up now and start your job search" data-ja="日本語村への登録は無料です。今すぐ登録して、就職活動を始めましょう" data-zh="注册免费。立即注册并开始您的求职活动" style="font-size: 1.2rem; color: white; margin-bottom: 2rem;">日本語村への登録は無料です。今すぐ登録して、就職活動を始めましょう</p>
+<a class="btn" data-en="Free Registration" data-ja="無料会員登録" data-zh="免费注册" href="auth.html" style="font-size: 1.2rem; padding: 1rem 3rem; background-color: white; color: var(--primary-orange);">無料会員登録</a>
+</div>
+</section>
+</main>
+	<!-- フッター -->
+	<footer>
+		<div class="footer-content">
+			<div class="footer-links">
+				<a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+				<span>|</span>
+				<a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+				<span>|</span>
+				<a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+			</div>
+			<p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+		</div>
+	</footer>
+<!-- JavaScript -->
+<script src="js/header.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ja="個別相談 - 日本語村" data-en="Consultations - NIHONGOMURA" data-zh="个别咨询 - 日本语村">個別相談 - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/consultations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css' rel='stylesheet' />
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo"><img src="images/logo.png" alt="日本語村 ロゴ"></a>
+            <button class="mobile-menu-toggle" aria-label="メニュー"><i class="fas fa-bars"></i></button>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a></li>
+                    <li><a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a></li>
+                    <li><a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a></li>
+                    <li><a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a></li>
+                    <li><a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ja">日本語</button><span class="separator">/</span>
+                    <button class="lang-btn" data-lang="en">English</button><span class="separator">/</span>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+                <div class="auth-buttons">
+                    <a href="auth.html" class="btn-login" data-ja="ログイン" data-en="Login" data-zh="登录">ログイン</a>
+                    <a href="auth.html" class="btn-register" data-ja="無料会員登録" data-en="Free Registration" data-zh="免费注册">無料会員登録</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="consultations-page">
+        <!-- ヒーローセクション -->
+        <section class="hero-section">
+            <div class="hero-overlay">
+                <h1 data-ja="個別相談サービス" data-en="Individual Consultation Service" data-zh="个别咨询服务">個別相談サービス</h1>
+                <p data-ja="あなたの就活の悩みを一緒に解決します" data-en="Let's solve your job hunting concerns together" data-zh="一起解决您的就业烦恼">あなたの就活の悩みを一緒に解決します</p>
+            </div>
+        </section>
+
+        <!-- カレンダーセクション -->
+        <section class="calendar-section">
+            <div class="container">
+                <h2 data-ja="空き状況カレンダー" data-en="Availability Calendar" data-zh="空闲时间日历">空き状況カレンダー</h2>
+                <p class="calendar-description" data-ja="カレンダーの空いている枠をクリックして予約できます" data-en="Click available slots on the calendar to book" data-zh="点击日历上的空闲时段进行预约">カレンダーの空いている枠をクリックして予約できます</p>
+                <div id="calendar"></div>
+            </div>
+        </section>
+
+        <!-- 相談の形式・時間・準備物 -->
+        <section class="consultation-format-section">
+            <div class="container">
+                <h2 data-ja="相談の形式・時間・準備物" data-en="Format, Duration & Preparation" data-zh="咨询形式・时间・准备物">相談の形式・時間・準備物</h2>
+                <div class="format-grid">
+                    <div class="format-item">
+                        <i class="fas fa-video"></i>
+                        <h3 data-ja="形式" data-en="Format" data-zh="形式">形式</h3>
+                        <p data-ja="Zoom等のオンライン会議ツール" data-en="Online meeting tools like Zoom" data-zh="Zoom等在线会议工具">Zoom等のオンライン会議ツール</p>
+                    </div>
+                    <div class="format-item">
+                        <i class="fas fa-clock"></i>
+                        <h3 data-ja="所要時間" data-en="Duration" data-zh="所需时间">所要時間</h3>
+                        <p data-ja="30分～60分（相談内容により調整可能）" data-en="30-60 minutes (adjustable)" data-zh="30分～60分（可根据咨询内容调整）">30分～60分（相談内容により調整可能）</p>
+                    </div>
+                    <div class="format-item">
+                        <i class="fas fa-file-alt"></i>
+                        <h3 data-ja="準備物" data-en="Preparation" data-zh="准备物">準備物</h3>
+                        <p data-ja="履歴書、募集要項、質問メモなど（相談内容に応じて）" data-en="Resume, job description, questions, etc." data-zh="简历、招聘要求、问题备忘等（根据咨询内容）">履歴書、募集要項、質問メモなど（相談内容に応じて）</p>
+                    </div>
+                </div>
+                
+                <!-- 予約ボタン -->
+                <div class="booking-button-container">
+                    <a href="consultation-booking.html" class="btn-booking">
+                        <i class="fas fa-calendar-check"></i>
+                        <span data-ja="個別相談の予約はこちら" data-en="Book a Consultation" data-zh="预约个别咨询">個別相談の予約はこちら</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 注意書き -->
+        <section class="notice-section">
+            <div class="container">
+                <h2 data-ja="ご利用にあたっての注意事項" data-en="Important Notes" data-zh="使用注意事项">ご利用にあたっての注意事項</h2>
+                <div class="notice-content">
+                    <h3 data-ja="個人情報の取り扱いについて" data-en="Privacy Policy" data-zh="个人信息处理">個人情報の取り扱いについて</h3>
+                    <p data-ja="相談内容は厳重に管理し、第三者に開示することはございません。安心してご相談ください。" data-en="All consultation content is strictly managed and will not be disclosed to third parties." data-zh="咨询内容将严格管理，不会向第三方披露。">相談内容は厳重に管理し、第三者に開示することはございません。安心してご相談ください。</p>
+                    
+                    <h3 data-ja="ビザ・在留資格に関する相談について" data-en="Visa & Residence Status" data-zh="关于签证・在留资格的咨询">ビザ・在留資格に関する相談について</h3>
+                    <p data-ja="ビザ・在留資格に関する相談は、一般的な情報提供のみとなります。個別の法的判断が必要な場合は、行政書士や弁護士などの専門家にご相談ください。" data-en="Visa and residence status consultations are for general information only. For individual legal judgments, please consult specialists such as administrative scriveners or lawyers." data-zh="关于签证・在留资格的咨询仅提供一般信息。如需个别法律判断，请咨询行政书士或律师等专家。">ビザ・在留資格に関する相談は、一般的な情報提供のみとなります。個別の法的判断が必要な場合は、行政書士や弁護士などの専門家にご相談ください。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+                <span>|</span>
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+                <span>|</span>
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <!-- カスタムJS -->
+    <script src="js/header.js"></script>
+    <script src="js/consultations.js"></script>
+</body>
+</html>

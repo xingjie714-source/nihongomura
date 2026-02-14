@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ja="イベント - 日本語村" data-en="Events - NIHONGOMURA" data-zh="活动 - 日本语村">イベント - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/events.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-container">
+            <!-- ロゴ -->
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="日本語村 ロゴ">
+            </a>
+            <!-- モバイルメニュートグル -->
+            <button class="mobile-menu-toggle" aria-label="メニュー">
+                <i class="fas fa-bars"></i>
+            </button>
+            <!-- ナビゲーションメニュー -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a></li>
+                    <li><a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a></li>
+                    <li><a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a></li>
+                    <li><a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a></li>
+                    <li><a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a></li>
+                </ul>
+            </nav>
+            <!-- 右側のアクション -->
+            <div class="header-actions">
+                <!-- 言語選択 -->
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ja">日本語</button>
+                    <span class="separator">/</span>
+                    <button class="lang-btn" data-lang="en">English</button>
+                    <span class="separator">/</span>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+                <!-- 認証ボタン -->
+                <div class="auth-buttons">
+                    <a href="auth.html" class="btn-login" data-ja="ログイン" data-en="Login" data-zh="登录">ログイン</a>
+                    <a href="auth.html" class="btn-register" data-ja="無料会員登録" data-en="Free Registration" data-zh="免费注册">無料会員登録</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="events-page">
+        <!-- ヒーローセクション -->
+        <section class="hero-section">
+            <div class="hero-overlay">
+                <h1 data-ja="企業説明会・イベント" data-en="Recruitment Events" data-zh="企业说明会・活动">企業説明会・イベント</h1>
+                <p data-ja="企業と直接つながる機会" data-en="Direct opportunities to connect with companies" data-zh="与企业直接联系的机会">企業と直接つながる機会</p>
+            </div>
+        </section>
+
+        <!-- イベント一覧 -->
+        <section class="events-list-section">
+            <div class="container">
+                <h2 data-ja="開催予定のイベント" data-en="Upcoming Events" data-zh="即将举办的活动">開催予定のイベント</h2>
+                <div id="events-list" class="events-list">
+                    <!-- イベントカードがJavaScriptで動的に生成されます -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+                <span>|</span>
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+                <span>|</span>
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- カスタムJS -->
+    <script src="js/header.js"></script>
+    <script src="js/events.js"></script>
+</body>
+</html>

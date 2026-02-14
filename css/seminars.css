@@ -1,0 +1,438 @@
+/* ============================================
+   セミナーページ専用スタイル
+   ============================================ */
+
+/* ヒーローセクション */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1600') center/cover;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.hero-overlay h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.hero-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* コンテナ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* カレンダーセクション */
+.calendar-section {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.calendar-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+#calendar {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* FullCalendar カスタマイズ */
+.fc {
+    font-family: 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+}
+
+.fc-event {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
+    cursor: pointer;
+}
+
+.fc-event:hover {
+    background-color: var(--secondary-orange);
+    border-color: var(--secondary-orange);
+}
+
+.fc-button-primary {
+    background-color: var(--primary-orange) !important;
+    border-color: var(--primary-orange) !important;
+}
+
+.fc-button-primary:hover {
+    background-color: var(--secondary-orange) !important;
+    border-color: var(--secondary-orange) !important;
+}
+
+.fc-button-primary:disabled {
+    background-color: var(--medium-gray) !important;
+    border-color: var(--medium-gray) !important;
+}
+
+/* セミナー受講ロードマップセクション */
+.roadmap-section {
+    background-color: #fff;
+    padding: 4rem 0;
+}
+
+.roadmap-section h2 {
+    text-align: center;
+    color: var(--primary-orange);
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.roadmap-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.roadmap-level {
+    flex: 1;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.roadmap-level:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.level-header {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.level-header.beginner {
+    background: linear-gradient(135deg, #FF9A76 0%, #FF7A59 100%);
+}
+
+.level-header.intermediate {
+    background: linear-gradient(135deg, #FFA94D 0%, #FF8C42 100%);
+}
+
+.level-header.advanced {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
+}
+
+.level-header i {
+    font-size: 2.5rem;
+}
+
+.level-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.level-content {
+    padding: 2rem 1.5rem;
+}
+
+.level-content h4 {
+    color: var(--dark-gray);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-orange);
+    padding-bottom: 0.5rem;
+}
+
+.level-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.level-content li {
+    color: var(--dark-gray);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.level-content li:before {
+    content: "•";
+    color: var(--primary-orange);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.level-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.level-tags .tag {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background-color: #FFF5F0;
+    color: var(--primary-orange);
+    border: 1px solid var(--primary-orange);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.level-tags .tag.highlight {
+    background-color: var(--primary-orange);
+    color: white;
+}
+
+.roadmap-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-orange);
+    font-size: 2.5rem;
+}
+
+.roadmap-arrow i {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* セミナー一覧セクション */
+.seminars-list-section {
+    background-color: white;
+    padding: 3rem 0;
+}
+
+.seminars-list-section h2 {
+    text-align: center;
+    color: var(--dark-gray);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.seminars-list {
+    display: grid;
+    gap: 2rem;
+}
+
+/* セミナーカード */
+.seminar-card {
+    display: flex;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.seminar-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.seminar-image {
+    width: 35%;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--light-gray);
+}
+
+.seminar-content {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.seminar-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    background-color: #FFE5E5;
+    color: #FF6B6B;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.tag.beginner {
+    background-color: #E8F5E9;
+    color: #4CAF50;
+}
+
+.tag.english {
+    background-color: #E3F2FD;
+    color: #2196F3;
+}
+
+.tag.level {
+    background-color: #FFF3E0;
+    color: #FF9800;
+}
+
+.seminar-title {
+    font-size: 1.4rem;
+    color: var(--dark-gray);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.seminar-description {
+    color: var(--medium-gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    flex: 1;
+}
+
+.seminar-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: var(--light-gray);
+    border-radius: 6px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--dark-gray);
+    min-width: 100px;
+}
+
+.detail-value {
+    color: var(--medium-gray);
+}
+
+.seminar-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-apply {
+    background-color: var(--primary-orange);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-apply:hover {
+    background-color: var(--secondary-orange);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .hero-overlay h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-overlay p {
+        font-size: 1rem;
+    }
+
+    .roadmap-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .roadmap-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .roadmap-arrow {
+        transform: rotate(90deg);
+        padding: 1rem 0;
+    }
+
+    .level-header {
+        padding: 1.5rem 1rem;
+    }
+
+    .level-header i {
+        font-size: 2rem;
+    }
+
+    .level-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .level-content {
+        padding: 1.5rem 1rem;
+    }
+
+    .seminar-card {
+        flex-direction: column;
+    }
+
+    .seminar-image {
+        width: 100%;
+        min-height: 200px;
+    }
+
+    .seminar-details {
+        grid-template-columns: 1fr;
+    }
+
+    .seminar-content {
+        padding: 1.5rem;
+    }
+}
+
+/* フッター */
+/* フッタースタイルはcommon.cssで管理 */
