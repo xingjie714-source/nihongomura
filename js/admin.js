@@ -1,5 +1,14 @@
-// 管理者権限チェック関数
+// Supabaseクライアントを取得
+const supabase = window.supabaseClient;
+
+// 管理者権限チェック
 async function checkAdminRole() {
+    if (!supabase) {
+        console.error('Supabase client not initialized');
+        window.location.href = 'admin-login.html';
+        return false;
+    }
+    
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
