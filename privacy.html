@@ -55,16 +55,20 @@
         }
     </style>
 </head>
-<body>
-    <!-- ヘッダー -->
+<body>    <!-- ヘッダー -->
     <header>
         <div class="header-container">
-            <a class="logo" href="index.html">
+            <!-- ロゴ -->
+            <a href="index.html" class="logo">
                 <img src="images/logo.png" alt="日本語村 ロゴ">
             </a>
+
+            <!-- モバイルメニュートグル -->
             <button class="mobile-menu-toggle" aria-label="メニュー">
                 <i class="fas fa-bars"></i>
             </button>
+
+            <!-- ナビゲーションメニュー -->
             <nav>
                 <ul class="nav-menu">
                     <li><a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a></li>
@@ -74,7 +78,10 @@
                     <li><a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a></li>
                 </ul>
             </nav>
+
+            <!-- 右側のアクション -->
             <div class="header-actions">
+                <!-- 言語選択 -->
                 <div class="language-switcher">
                     <button class="lang-btn active" data-lang="ja">日本語</button>
                     <span class="separator">/</span>
@@ -82,13 +89,16 @@
                     <span class="separator">/</span>
                     <button class="lang-btn" data-lang="zh">中文</button>
                 </div>
+
+                <!-- 認証ボタン -->
                 <div class="auth-buttons">
-                    <a href="auth.html" class="btn-login" data-ja="ログイン" data-en="Login" data-zh="登录">ログイン</a>
+                    <a href="auth.html" class="btn-login" data-ja="ログイン" data-en="Login" data-zh="登録">ログイン</a>
                     <a href="auth.html" class="btn-register" data-ja="無料会員登録" data-en="Free Registration" data-zh="免费注册">無料会員登録</a>
                 </div>
             </div>
         </div>
     </header>
+
 
     <!-- メインコンテンツ -->
     <main class="privacy-page">
