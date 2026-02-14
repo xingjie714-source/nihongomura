@@ -154,20 +154,58 @@ function updateNationalityFilter() {
         option.textContent = nationality;
         select.appendChild(option);
     });
+    
+    // 卒業予定日フィルターのオプションを更新
+    updateGraduationDateFilter();
+}
+
+// 卒業予定日フィルターのオプションを更新
+function updateGraduationDateFilter() {
+    const graduationDates = [...new Set(allUsers.map(u => u.graduation_date).filter(d => d))].sort();
+    const select = document.getElementById('filterGraduationDate');
+    
+    if (!select) return; // フィルター要素がない場合は終了
+    
+    // 既存のオプションをクリア（「すべて」以外）
+    select.innerHTML = '<option value="">すべて</option>';
+    
+    // 卒業予定日オプションを追加（YYYY-MM形式に変換）
+    const yearMonths = [...new Set(graduationDates.map(date => {
+        if (!date) return null;
+        const d = new Date(date);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    }).filter(ym => ym))].sort();
+    
+    yearMonths.forEach(yearMonth => {
+        const option = document.createElement('option');
+        option.value = yearMonth;
+        const [year, month] = yearMonth.split('-');
+        option.textContent = `${year}年${parseInt(month)}月`;
+        select.appendChild(option);
+    });
 }
 
 // フィルターを適用
 function applyFilters() {
     const nationalityFilter = document.getElementById('filterNationality').value.toLowerCase();
-    const universityFilter = document.getElementById('filterUniversity').value.toLowerCase();
     const japaneseLevelFilter = document.getElementById('filterJapaneseLevel').value;
+    const graduationDateFilter = document.getElementById('filterGraduationDate').value;
     
     const filteredUsers = allUsers.filter(user => {
         const matchNationality = !nationalityFilter || (user.nationality || '').toLowerCase() === nationalityFilter;
-        const matchUniversity = !universityFilter || (user.university || '').toLowerCase().includes(universityFilter);
         const matchJapaneseLevel = !japaneseLevelFilter || user.japanese_level === japaneseLevelFilter;
         
-        return matchNationality && matchUniversity && matchJapaneseLevel;
+        // 卒業予定日フィルター（YYYY-MM形式で比較）
+        let matchGraduationDate = true;
+        if (graduationDateFilter && user.graduation_date) {
+            const userDate = new Date(user.graduation_date);
+            const userYearMonth = `${userDate.getFullYear()}-${String(userDate.getMonth() + 1).padStart(2, '0')}`;
+            matchGraduationDate = userYearMonth === graduationDateFilter;
+        } else if (graduationDateFilter) {
+            matchGraduationDate = false;
+        }
+        
+        return matchNationality && matchJapaneseLevel && matchGraduationDate;
     });
     
     displayUsers(filteredUsers);
@@ -176,8 +214,8 @@ function applyFilters() {
 // フィルターをリセット
 function resetFilters() {
     document.getElementById('filterNationality').value = '';
-    document.getElementById('filterUniversity').value = '';
     document.getElementById('filterJapaneseLevel').value = '';
+    document.getElementById('filterGraduationDate').value = '';
     displayUsers(allUsers);
 }
 

@@ -217,7 +217,30 @@
                 </div>
                 <div class="form-group">
                     <label for="registerNationality" data-ja="国籍 *" data-en="Nationality *" data-zh="国籍 *">国籍 *</label>
-                    <input type="text" id="registerNationality" required>
+                    <select id="registerNationality" required>
+                        <option value="">選択してください</option>
+                        <option value="中国">中国</option>
+                        <option value="韓国">韓国</option>
+                        <option value="ベトナム">ベトナム</option>
+                        <option value="ネパール">ネパール</option>
+                        <option value="インドネシア">インドネシア</option>
+                        <option value="フィリピン">フィリピン</option>
+                        <option value="タイ">タイ</option>
+                        <option value="ミャンマー">ミャンマー</option>
+                        <option value="バングラデシュ">バングラデシュ</option>
+                        <option value="ブラジル">ブラジル</option>
+                        <option value="ペルー">ペルー</option>
+                        <option value="モンゴル">モンゴル</option>
+                        <option value="インド">インド</option>
+                        <option value="スリランカ">スリランカ</option>
+                        <option value="アメリカ">アメリカ</option>
+                        <option value="カナダ">カナダ</option>
+                        <option value="イギリス">イギリス</option>
+                        <option value="フランス">フランス</option>
+                        <option value="ドイツ">ドイツ</option>
+                        <option value="オーストラリア">オーストラリア</option>
+                        <option value="その他">その他</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="registerJapaneseLevel" data-ja="日本語レベル *" data-en="Japanese Level *" data-zh="日语水平 *">日本語レベル *</label>
@@ -428,11 +451,11 @@
                 return;
             }
             
-            showSuccessMessage('登録が完了しました！確認メールをご確認ください。');
+            showSuccessMessage('登録が完了しました！');
             setTimeout(() => {
-                // ログインタブに切り替え
-                document.querySelector('[data-tab="login"]').click();
-            }, 2000);
+                // 登録完了ページにリダイレクト
+                window.location.href = 'registration-complete.html';
+            }, 1500);
         });
 
         // パスワードリセット
