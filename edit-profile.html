@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ja="プロフィール編集 - 日本語村" data-en="Edit Profile - Nihongo Mura" data-zh="编辑个人资料 - 日本语村">プロフィール編集 - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .edit-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .edit-header {
+            background: linear-gradient(135deg, #FF6B35, #FF8C42);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .edit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        .form-section h2 {
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark-gray);
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background: var(--primary-orange);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #E55A2B;
+        }
+        .btn-secondary {
+            background: white;
+            color: var(--primary-orange);
+            border: 2px solid var(--primary-orange);
+        }
+        .btn-secondary:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="日本語村 ロゴ">
+                </a>
+                <nav class="nav">
+                    <a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a>
+                    <a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a>
+                    <a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a>
+                    <a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a>
+                    <a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a>
+                </nav>
+                <div class="header-actions">
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="ja">日本語</button>
+                        <span>/</span>
+                        <button class="lang-btn" data-lang="en">English</button>
+                        <span>/</span>
+                        <button class="lang-btn" data-lang="zh">中文</button>
+                    </div>
+                    <a href="mypage.html" class="btn btn-primary" data-ja="マイページ" data-en="My Page" data-zh="我的页面">マイページ</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 編集フォーム -->
+    <div class="edit-container">
+        <div class="edit-header">
+            <h1 data-ja="プロフィール編集" data-en="Edit Profile" data-zh="编辑个人资料">プロフィール編集</h1>
+        </div>
+
+        <div class="edit-card">
+            <form id="editProfileForm">
+                <div class="form-section">
+                    <h2 data-ja="基本情報" data-en="Basic Information" data-zh="基本信息">基本情報</h2>
+                    
+                    <div class="form-group">
+                        <label data-ja="氏名" data-en="Full Name" data-zh="姓名">氏名 <span style="color: red;">*</span></label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ja="生年月日" data-en="Date of Birth" data-zh="出生日期">生年月日 <span style="color: red;">*</span></label>
+                        <input type="date" id="birthdate" name="birthdate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ja="国籍" data-en="Nationality" data-zh="国籍">国籍 <span style="color: red;">*</span></label>
+                        <select id="nationality" name="nationality" required>
+                            <option value="">選択してください</option>
+                            <option value="中国">中国</option>
+                            <option value="韓国">韓国</option>
+                            <option value="ベトナム">ベトナム</option>
+                            <option value="ネパール">ネパール</option>
+                            <option value="インドネシア">インドネシア</option>
+                            <option value="フィリピン">フィリピン</option>
+                            <option value="タイ">タイ</option>
+                            <option value="ミャンマー">ミャンマー</option>
+                            <option value="バングラデシュ">バングラデシュ</option>
+                            <option value="ブラジル">ブラジル</option>
+                            <option value="ペルー">ペルー</option>
+                            <option value="モンゴル">モンゴル</option>
+                            <option value="インド">インド</option>
+                            <option value="スリランカ">スリランカ</option>
+                            <option value="アメリカ">アメリカ</option>
+                            <option value="カナダ">カナダ</option>
+                            <option value="イギリス">イギリス</option>
+                            <option value="フランス">フランス</option>
+                            <option value="ドイツ">ドイツ</option>
+                            <option value="オーストラリア">オーストラリア</option>
+                            <option value="その他">その他</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ja="電話番号" data-en="Phone Number" data-zh="电话号码">電話番号</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 data-ja="学歴情報" data-en="Academic Information" data-zh="学历信息">学歴情報</h2>
+                    
+                    <div class="form-group">
+                        <label data-ja="大学名" data-en="University" data-zh="大学名称">大学名 <span style="color: red;">*</span></label>
+                        <input type="text" id="university" name="university" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ja="学位レベル" data-en="Degree Level" data-zh="学位等级">学位レベル <span style="color: red;">*</span></label>
+                        <select id="degree_level" name="degree_level" required>
+                            <option value="">選択してください</option>
+                            <option value="学士">学士</option>
+                            <option value="修士">修士</option>
+                            <option value="博士">博士</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ja="専攻" data-en="Major" data-zh="专业">専攻 <span style="color: red;">*</span></label>
+                        <input type="text" id="major" name="major" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ja="卒業予定日" data-en="Expected Graduation" data-zh="预计毕业日期">卒業予定日 <span style="color: red;">*</span></label>
+                        <input type="month" id="graduation_date" name="graduation_date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-ja="日本語レベル" data-en="Japanese Level" data-zh="日语水平">日本語レベル <span style="color: red;">*</span></label>
+                        <select id="japanese_level" name="japanese_level" required>
+                            <option value="">選択してください</option>
+                            <option value="N1">N1</option>
+                            <option value="N2">N2</option>
+                            <option value="N3">N3</option>
+                            <option value="N4">N4</option>
+                            <option value="N5">N5</option>
+                            <option value="初級">初級</option>
+                            <option value="中級">中級</option>
+                            <option value="上級">上級</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> <span data-ja="保存する" data-en="Save" data-zh="保存">保存する</span>
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='mypage.html'">
+                        <i class="fas fa-times"></i> <span data-ja="キャンセル" data-en="Cancel" data-zh="取消">キャンセル</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a> |
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a> |
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/language.js"></script>
+    <script>
+        const supabase = window.supabaseClient;
+        let currentUser = null;
+
+        // ログイン状態をチェック
+        async function checkAuth() {
+            const { data: { user } } = await supabase.auth.getUser();
+            
+            if (!user) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            currentUser = user;
+            await loadUserProfile(user.id);
+        }
+
+        // ユーザープロフィールを読み込み
+        async function loadUserProfile(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('id', userId)
+                    .single();
+
+                if (error) throw error;
+
+                if (data) {
+                    document.getElementById('name').value = data.name || '';
+                    document.getElementById('birthdate').value = data.birthdate || '';
+                    document.getElementById('nationality').value = data.nationality || '';
+                    document.getElementById('phone').value = data.phone || '';
+                    document.getElementById('university').value = data.university || '';
+                    document.getElementById('degree_level').value = data.degree_level || '';
+                    document.getElementById('major').value = data.major || '';
+                    document.getElementById('graduation_date').value = data.graduation_date || '';
+                    document.getElementById('japanese_level').value = data.japanese_level || '';
+                }
+            } catch (error) {
+                console.error('プロフィール読み込みエラー:', error);
+                alert('プロフィール情報の読み込みに失敗しました。');
+            }
+        }
+
+        // フォーム送信
+        document.getElementById('editProfileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!currentUser) {
+                alert('ログインしてください。');
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById('name').value,
+                birthdate: document.getElementById('birthdate').value,
+                nationality: document.getElementById('nationality').value,
+                phone: document.getElementById('phone').value,
+                university: document.getElementById('university').value,
+                degree_level: document.getElementById('degree_level').value,
+                major: document.getElementById('major').value,
+                graduation_date: document.getElementById('graduation_date').value,
+                japanese_level: document.getElementById('japanese_level').value,
+            };
+
+            try {
+                const { error } = await supabase
+                    .from('users')
+                    .update(formData)
+                    .eq('id', currentUser.id);
+
+                if (error) throw error;
+
+                alert('プロフィールを更新しました！');
+                window.location.href = 'mypage.html';
+            } catch (error) {
+                console.error('更新エラー:', error);
+                alert('プロフィールの更新に失敗しました: ' + error.message);
+            }
+        });
+
+        // ページ読み込み時に実行
+        checkAuth();
+    </script>
+</body>
+</html>

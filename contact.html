@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-ja="お問い合わせ - 日本語村" data-en="Contact Us - NIHONGOMURA" data-zh="联系我们 - 日本语村">お問い合わせ - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-page {
+            min-height: calc(100vh - 200px);
+            padding: 4rem 2rem;
+        }
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .page-description {
+            text-align: center;
+            color: var(--medium-gray);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+        .required {
+            color: var(--primary-orange);
+            margin-left: 0.25rem;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+        }
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .submit-btn:hover {
+            background: #E55A2B;
+        }
+        .contact-info {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--light-gray);
+            border-radius: 12px;
+        }
+        .contact-info h3 {
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+        }
+        .contact-info p {
+            color: var(--medium-gray);
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+        }
+        .contact-info i {
+            color: var(--primary-orange);
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-container">
+            <a class="logo" href="index.html">
+                <img src="images/logo.png" alt="日本語村 ロゴ">
+            </a>
+            <button class="mobile-menu-toggle" aria-label="メニュー">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a></li>
+                    <li><a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a></li>
+                    <li><a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a></li>
+                    <li><a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a></li>
+                    <li><a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ja">日本語</button>
+                    <span class="separator">/</span>
+                    <button class="lang-btn" data-lang="en">English</button>
+                    <span class="separator">/</span>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+                <div class="auth-buttons">
+                    <a href="auth.html" class="btn-login" data-ja="ログイン" data-en="Login" data-zh="登录">ログイン</a>
+                    <a href="auth.html" class="btn-register" data-ja="無料会員登録" data-en="Free Registration" data-zh="免费注册">無料会員登録</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="contact-page">
+        <div class="contact-container">
+            <h1 class="page-title" data-ja="お問い合わせ" data-en="Contact Us" data-zh="联系我们">お問い合わせ</h1>
+            <p class="page-description" data-ja="ご質問やご相談がございましたら、お気軽にお問い合わせください。" data-en="If you have any questions or inquiries, please feel free to contact us." data-zh="如果您有任何问题或咨询，请随时与我们联系。">
+                ご質問やご相談がございましたら、お気軽にお問い合わせください。
+            </p>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label data-ja="お名前" data-en="Name" data-zh="姓名">お名前<span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-ja="メールアドレス" data-en="Email Address" data-zh="电子邮件">メールアドレス<span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-ja="電話番号" data-en="Phone Number" data-zh="电话号码">電話番号</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+
+                <div class="form-group">
+                    <label data-ja="お問い合わせ種類" data-en="Inquiry Type" data-zh="咨询类型">お問い合わせ種類<span class="required">*</span></label>
+                    <select id="type" name="type" required>
+                        <option value="" data-ja="選択してください" data-en="Please select" data-zh="请选择">選択してください</option>
+                        <option value="seminar" data-ja="セミナーについて" data-en="About Seminars" data-zh="关于研讨会">セミナーについて</option>
+                        <option value="consultation" data-ja="個別相談について" data-en="About Consultations" data-zh="关于咨询">個別相談について</option>
+                        <option value="job" data-ja="求人について" data-en="About Jobs" data-zh="关于职位">求人について</option>
+                        <option value="other" data-ja="その他" data-en="Other" data-zh="其他">その他</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label data-ja="お問い合わせ内容" data-en="Message" data-zh="咨询内容">お問い合わせ内容<span class="required">*</span></label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" data-ja="送信する" data-en="Submit" data-zh="提交">送信する</button>
+            </form>
+
+            <div class="contact-info">
+                <h3 data-ja="運営会社情報" data-en="Company Information" data-zh="运营公司信息">運営会社情報</h3>
+                <p><i class="fas fa-building"></i><span data-ja="株式会社At One" data-en="At One Co., Ltd." data-zh="At One株式会社">株式会社At One</span></p>
+                <p><i class="fas fa-envelope"></i>info@nihongomura.jp</p>
+                <p><i class="fas fa-clock"></i><span data-ja="受付時間：平日 9:00-18:00" data-en="Business Hours: Weekdays 9:00-18:00" data-zh="受理时间：工作日 9:00-18:00">受付時間：平日 9:00-18:00</span></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+                <span>|</span>
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+                <span>|</span>
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/language.js"></script>
+    <script>
+        const supabase = window.supabaseClient;
+
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                type: document.getElementById('type').value,
+                message: document.getElementById('message').value,
+                created_at: new Date().toISOString()
+            };
+
+            try {
+                const { error } = await supabase
+                    .from('contact_inquiries')
+                    .insert([formData]);
+
+                if (error) throw error;
+
+                alert('お問い合わせを送信しました。ありがとうございます。');
+                this.reset();
+            } catch (error) {
+                console.error('送信エラー:', error);
+                alert('送信に失敗しました。もう一度お試しください。');
+            }
+        });
+    </script>
+</body>
+</html>

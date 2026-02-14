@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マイページ - 日本語村</title>
+    <title data-ja="マイページ - 日本語村" data-en="My Page - Nihongo Mura" data-zh="我的页面 - 日本语村">マイページ - 日本語村</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -87,6 +87,62 @@
             background: var(--primary-orange);
             color: white;
         }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .bookings-table th,
+        .bookings-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .bookings-table th {
+            background: var(--light-gray);
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        .bookings-table tr:hover {
+            background: var(--light-gray);
+        }
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--medium-gray);
+        }
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--light-gray);
+        }
     </style>
 </head>
 <body>
@@ -98,11 +154,11 @@
                     <img src="images/logo.png" alt="日本語村 ロゴ">
                 </a>
                 <nav class="nav">
-                    <a href="seminars-public.html" data-i18n="nav.seminars">セミナー</a>
-                    <a href="events-public.html" data-i18n="nav.events">イベント</a>
-                    <a href="consultations-public.html" data-i18n="nav.consultations">個別相談</a>
-                    <a href="jobs-public.html" data-i18n="nav.jobs">求人検索</a>
-                    <a href="knowledge.html" data-i18n="nav.knowledge">就職知識</a>
+                    <a href="seminars-public.html" data-ja="セミナー" data-en="Seminars" data-zh="研讨会">セミナー</a>
+                    <a href="events-public.html" data-ja="イベント" data-en="Events" data-zh="活动">イベント</a>
+                    <a href="consultations-public.html" data-ja="個別相談" data-en="Consultations" data-zh="个别咨询">個別相談</a>
+                    <a href="jobs-public.html" data-ja="求人検索" data-en="Job Search" data-zh="职位搜索">求人検索</a>
+                    <a href="knowledge.html" data-ja="就職知識" data-en="Career Knowledge" data-zh="就业知识">就職知識</a>
                 </nav>
                 <div class="header-actions">
                     <div class="language-switcher">
@@ -112,8 +168,8 @@
                         <span>/</span>
                         <button class="lang-btn" data-lang="zh">中文</button>
                     </div>
-                    <a href="mypage.html" class="btn btn-primary" id="mypageBtn" data-i18n="nav.mypage">マイページ</a>
-                    <button class="btn btn-secondary" id="logoutBtn" data-i18n="nav.logout">ログアウト</button>
+                    <a href="mypage.html" class="btn btn-primary" data-ja="マイページ" data-en="My Page" data-zh="我的页面">マイページ</a>
+                    <button class="btn btn-secondary" id="logoutBtn" data-ja="ログアウト" data-en="Logout" data-zh="退出登录">ログアウト</button>
                 </div>
             </div>
         </div>
@@ -122,58 +178,59 @@
     <!-- マイページコンテンツ -->
     <div class="mypage-container">
         <div class="mypage-header">
-            <h1>マイページ</h1>
-            <p id="welcomeMessage">ようこそ、<span id="userName"></span>さん</p>
+            <h1 data-ja="マイページ" data-en="My Page" data-zh="我的页面">マイページ</h1>
+            <p id="welcomeMessage"><span data-ja="ようこそ、" data-en="Welcome, " data-zh="欢迎，">ようこそ、</span><span id="userName"></span><span data-ja="さん" data-en="" data-zh="">さん</span></p>
         </div>
 
+        <!-- プロフィール情報 -->
         <div class="profile-card">
             <div class="profile-section">
-                <h2>基本情報</h2>
+                <h2 data-ja="基本情報" data-en="Basic Information" data-zh="基本信息">基本情報</h2>
                 <div class="profile-grid">
                     <div class="profile-item">
-                        <label>氏名</label>
+                        <label data-ja="氏名" data-en="Full Name" data-zh="姓名">氏名</label>
                         <div class="value" id="profileName">-</div>
                     </div>
                     <div class="profile-item">
-                        <label>メールアドレス</label>
+                        <label data-ja="メールアドレス" data-en="Email Address" data-zh="电子邮箱">メールアドレス</label>
                         <div class="value" id="profileEmail">-</div>
                     </div>
                     <div class="profile-item">
-                        <label>生年月日</label>
+                        <label data-ja="生年月日" data-en="Date of Birth" data-zh="出生日期">生年月日</label>
                         <div class="value" id="profileBirthdate">-</div>
                     </div>
                     <div class="profile-item">
-                        <label>国籍</label>
+                        <label data-ja="国籍" data-en="Nationality" data-zh="国籍">国籍</label>
                         <div class="value" id="profileNationality">-</div>
                     </div>
                     <div class="profile-item">
-                        <label>電話番号</label>
+                        <label data-ja="電話番号" data-en="Phone Number" data-zh="电话号码">電話番号</label>
                         <div class="value" id="profilePhone">-</div>
                     </div>
                 </div>
             </div>
 
             <div class="profile-section">
-                <h2>学歴情報</h2>
+                <h2 data-ja="学歴情報" data-en="Academic Information" data-zh="学历信息">学歴情報</h2>
                 <div class="profile-grid">
                     <div class="profile-item">
-                        <label>大学名</label>
+                        <label data-ja="大学名" data-en="University" data-zh="大学名称">大学名</label>
                         <div class="value" id="profileUniversity">-</div>
                     </div>
                     <div class="profile-item">
-                        <label>学位レベル</label>
+                        <label data-ja="学位レベル" data-en="Degree Level" data-zh="学位等级">学位レベル</label>
                         <div class="value" id="profileDegreeLevel">-</div>
                     </div>
                     <div class="profile-item">
-                        <label>専攻</label>
+                        <label data-ja="専攻" data-en="Major" data-zh="专业">専攻</label>
                         <div class="value" id="profileMajor">-</div>
                     </div>
                     <div class="profile-item">
-                        <label>卒業予定日</label>
+                        <label data-ja="卒業予定日" data-en="Expected Graduation" data-zh="预计毕业日期">卒業予定日</label>
                         <div class="value" id="profileGraduationDate">-</div>
                     </div>
                     <div class="profile-item">
-                        <label>日本語レベル</label>
+                        <label data-ja="日本語レベル" data-en="Japanese Level" data-zh="日语水平">日本語レベル</label>
                         <div class="value" id="profileJapaneseLevel">-</div>
                     </div>
                 </div>
@@ -181,11 +238,35 @@
 
             <div class="action-buttons">
                 <button class="btn btn-primary" onclick="window.location.href='edit-profile.html'">
-                    <i class="fas fa-edit"></i> プロフィールを編集
+                    <i class="fas fa-edit"></i> <span data-ja="プロフィールを編集" data-en="Edit Profile" data-zh="编辑个人资料">プロフィールを編集</span>
                 </button>
                 <button class="btn btn-secondary" onclick="window.location.href='index.html'">
-                    <i class="fas fa-home"></i> トップページへ
+                    <i class="fas fa-home"></i> <span data-ja="トップページへ" data-en="Back to Home" data-zh="返回首页">トップページへ</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- セミナー予約 -->
+        <div class="profile-card">
+            <div class="profile-section">
+                <h2 data-ja="セミナー予約" data-en="Seminar Bookings" data-zh="研讨会预约">セミナー予約</h2>
+                <div id="seminarBookings"></div>
+            </div>
+        </div>
+
+        <!-- イベント予約 -->
+        <div class="profile-card">
+            <div class="profile-section">
+                <h2 data-ja="イベント予約" data-en="Event Bookings" data-zh="活动预约">イベント予約</h2>
+                <div id="eventBookings"></div>
+            </div>
+        </div>
+
+        <!-- 個別相談予約 -->
+        <div class="profile-card">
+            <div class="profile-section">
+                <h2 data-ja="個別相談予約" data-en="Consultation Bookings" data-zh="个别咨询预约">個別相談予約</h2>
+                <div id="consultationBookings"></div>
             </div>
         </div>
     </div>
@@ -194,9 +275,9 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-links">
-                <a href="contact.html">お問い合わせ</a> |
-                <a href="privacy.html">プライバシーポリシー</a> |
-                <a href="company.html">運営会社</a>
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a> |
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a> |
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
             </div>
             <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
         </div>
@@ -207,6 +288,7 @@
     <script src="js/language.js"></script>
     <script>
         const supabase = window.supabaseClient;
+        let currentUserId = null;
 
         // ログイン状態をチェック
         async function checkAuth() {
@@ -217,8 +299,9 @@
                 return;
             }
 
-            // ユーザー情報を取得
+            currentUserId = user.id;
             await loadUserProfile(user.id);
+            await loadBookings(user.id);
         }
 
         // ユーザープロフィールを読み込み
@@ -247,7 +330,156 @@
                 }
             } catch (error) {
                 console.error('プロフィール読み込みエラー:', error);
-                alert('プロフィール情報の読み込みに失敗しました。');
+            }
+        }
+
+        // 予約情報を読み込み
+        async function loadBookings(userId) {
+            await loadSeminarBookings(userId);
+            await loadEventBookings(userId);
+            await loadConsultationBookings(userId);
+        }
+
+        // セミナー予約を読み込み
+        async function loadSeminarBookings(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('seminar_bookings')
+                    .select(`
+                        *,
+                        seminars (
+                            title,
+                            date,
+                            time,
+                            location
+                        )
+                    `)
+                    .eq('user_id', userId)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                displayBookings('seminarBookings', data, 'seminar');
+            } catch (error) {
+                console.error('セミナー予約読み込みエラー:', error);
+                document.getElementById('seminarBookings').innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>予約情報の読み込みに失敗しました。</p></div>';
+            }
+        }
+
+        // イベント予約を読み込み
+        async function loadEventBookings(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('event_bookings')
+                    .select(`
+                        *,
+                        events (
+                            title,
+                            date,
+                            time,
+                            location
+                        )
+                    `)
+                    .eq('user_id', userId)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                displayBookings('eventBookings', data, 'event');
+            } catch (error) {
+                console.error('イベント予約読み込みエラー:', error);
+                document.getElementById('eventBookings').innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>予約情報の読み込みに失敗しました。</p></div>';
+            }
+        }
+
+        // 個別相談予約を読み込み
+        async function loadConsultationBookings(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('consultation_bookings')
+                    .select('*')
+                    .eq('user_id', userId)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                displayBookings('consultationBookings', data, 'consultation');
+            } catch (error) {
+                console.error('個別相談予約読み込みエラー:', error);
+                document.getElementById('consultationBookings').innerHTML = '<div class="empty-state"><i class="fas fa-calendar-times"></i><p>予約情報の読み込みに失敗しました。</p></div>';
+            }
+        }
+
+        // 予約情報を表示
+        function displayBookings(containerId, bookings, type) {
+            const container = document.getElementById(containerId);
+
+            if (!bookings || bookings.length === 0) {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-calendar-check"></i><p>予約はありません。</p></div>';
+                return;
+            }
+
+            let html = '<table class="bookings-table"><thead><tr>';
+            html += '<th>タイトル</th>';
+            html += '<th>日時</th>';
+            if (type !== 'consultation') {
+                html += '<th>場所</th>';
+            }
+            html += '<th>ステータス</th>';
+            html += '<th>アクション</th>';
+            html += '</tr></thead><tbody>';
+
+            bookings.forEach(booking => {
+                const status = booking.status || 'confirmed';
+                const statusClass = status === 'confirmed' ? 'status-confirmed' : status === 'cancelled' ? 'status-cancelled' : 'status-pending';
+                const statusText = status === 'confirmed' ? '確認済み' : status === 'cancelled' ? 'キャンセル済み' : '保留中';
+
+                html += '<tr>';
+                if (type === 'consultation') {
+                    html += `<td>個別相談</td>`;
+                    html += `<td>${booking.date} ${booking.time}</td>`;
+                } else {
+                    const item = type === 'seminar' ? booking.seminars : booking.events;
+                    html += `<td>${item?.title || '-'}</td>`;
+                    html += `<td>${item?.date || '-'} ${item?.time || ''}</td>`;
+                    html += `<td>${item?.location || '-'}</td>`;
+                }
+                html += `<td><span class="status-badge ${statusClass}">${statusText}</span></td>`;
+                html += `<td>`;
+                if (status !== 'cancelled') {
+                    html += `<button class="btn btn-danger" onclick="cancelBooking('${type}', '${booking.id}')"><i class="fas fa-times"></i> キャンセル</button>`;
+                }
+                html += `</td>`;
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // 予約をキャンセル
+        async function cancelBooking(type, bookingId) {
+            if (!confirm('本当にキャンセルしますか？')) {
+                return;
+            }
+
+            const tableName = type === 'seminar' ? 'seminar_bookings' : 
+                            type === 'event' ? 'event_bookings' : 
+                            'consultation_bookings';
+
+            try {
+                const { error } = await supabase
+                    .from(tableName)
+                    .update({ status: 'cancelled' })
+                    .eq('id', bookingId);
+
+                if (error) throw error;
+
+                alert('予約をキャンセルしました。');
+                await loadBookings(currentUserId);
+            } catch (error) {
+                console.error('キャンセルエラー:', error);
+                alert('キャンセルに失敗しました: ' + error.message);
             }
         }
 
