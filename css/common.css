@@ -136,6 +136,30 @@ nav {
     color: var(--primary-orange);
 }
 
+.lang-btn {
+    background: none;
+    border: none;
+    color: var(--medium-gray);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.lang-btn.active {
+    color: var(--primary-orange);
+    font-weight: bold;
+}
+
+.lang-btn:hover {
+    color: var(--primary-orange);
+}
+
+.separator {
+    color: var(--medium-gray);
+    font-size: 0.9rem;
+}
+
 /* 認証ボタン */
 .auth-buttons {
     display: flex;
