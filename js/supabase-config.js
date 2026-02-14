@@ -7,13 +7,13 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // Supabaseクライアントを初期化
 function initSupabase() {
     try {
-        if (typeof window.supabase === 'undefined') {
+        // Supabase SDKはwindow.supabaseとしてロードされる
+        if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient !== 'function') {
             console.error('Supabase SDK not loaded');
             return null;
         }
         
-        const { createClient } = window.supabase;
-        const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         console.log('Supabase initialized successfully');
         return client;
     } catch (error) {
@@ -22,14 +22,19 @@ function initSupabase() {
     }
 }
 
-// グローバル変数として公開
+// グローバル変数として公開（window.supabaseClientとして保存）
 window.supabaseClient = initSupabase();
 
 // ヘルパー関数: 現在のユーザーを取得
 async function getCurrentUser() {
     if (!window.supabaseClient) return null;
-    const { data: { user } } = await window.supabaseClient.auth.getUser();
-    return user;
+    try {
+        const { data: { user } } = await window.supabaseClient.auth.getUser();
+        return user;
+    } catch (error) {
+        console.error('Error getting current user:', error);
+        return null;
+    }
 }
 
 window.getCurrentUser = getCurrentUser;

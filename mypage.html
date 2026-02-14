@@ -287,12 +287,12 @@
     <script src="js/supabase-config.js"></script>
     <script src="js/language.min.js"></script>
     <script>
-        const supabase = window.supabaseClient;
+        const supabaseDb = window.supabaseClient;
         let currentUserId = null;
 
         // ログイン状態をチェック
         async function checkAuth() {
-            const { data: { user } } = await supabase.auth.getUser();
+            const { data: { user } } = await supabaseDb.auth.getUser();
             
             if (!user) {
                 window.location.href = 'auth.html';
@@ -485,7 +485,7 @@
 
         // ログアウト
         document.getElementById('logoutBtn').addEventListener('click', async () => {
-            const { error } = await supabase.auth.signOut();
+            const { error } = await supabaseDb.auth.signOut();
             if (error) {
                 console.error('ログアウトエラー:', error);
                 alert('ログアウトに失敗しました。');

@@ -1,15 +1,15 @@
 // Supabaseクライアントを取得
-const supabase = window.supabaseClient;
+const supabaseDb = window.supabaseClient;
 
 // 管理者権限チェック
 async function checkAdminRole() {
-    if (!supabase) {
+    if (!supabaseDb) {
         console.error('Supabase client not initialized');
         window.location.href = 'admin-login.html';
         return false;
     }
     
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await supabaseDb.auth.getUser();
     
     if (!user) {
         window.location.href = 'admin-login.html';
@@ -17,7 +17,7 @@ async function checkAdminRole() {
     }
     
     // プロフィール取得
-    const { data: profile } = await supabase
+    const { data: profile } = await supabaseDb
         .from('profiles')
         .select('role')
         .eq('id', user.id)
@@ -54,25 +54,25 @@ async function loadDashboard() {
 // 統計情報を読み込み
 async function loadStats() {
     // ユーザー数
-    const { count: usersCount } = await supabase
+    const { count: usersCount } = await supabaseDb
         .from('profiles')
         .select('*', { count: 'exact', head: true });
     document.getElementById('totalUsers').textContent = usersCount || 0;
 
     // セミナー数
-    const { count: seminarsCount } = await supabase
+    const { count: seminarsCount } = await supabaseDb
         .from('seminars')
         .select('*', { count: 'exact', head: true });
     document.getElementById('totalSeminars').textContent = seminarsCount || 0;
 
     // イベント数
-    const { count: eventsCount } = await supabase
+    const { count: eventsCount } = await supabaseDb
         .from('events')
         .select('*', { count: 'exact', head: true });
     document.getElementById('totalEvents').textContent = eventsCount || 0;
 
     // 求人数
-    const { count: jobsCount } = await supabase
+    const { count: jobsCount } = await supabaseDb
         .from('jobs')
         .select('*', { count: 'exact', head: true });
     document.getElementById('totalJobs').textContent = jobsCount || 0;
@@ -100,7 +100,7 @@ let allUsers = [];
 
 // ユーザー一覧を読み込み（拡張版）
 async function loadUsers() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseDb
         .from('profiles')
         .select('*')
         .order('created_at', { ascending: false });
@@ -294,7 +294,7 @@ function downloadUsersCSV() {
 
 // セミナー一覧を読み込み
 async function loadSeminars() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseDb
         .from('seminars')
         .select(`
             *,
@@ -341,7 +341,7 @@ function editSeminar(id) {
 
 async function deleteSeminar(id) {
     if (!confirm('本当に削除しますか？')) return;
-    const { error } = await supabase.from('seminars').delete().eq('id', id);
+    const { error } = await supabaseDb.from('seminars').delete().eq('id', id);
     if (error) {
         alert('削除に失敗しました: ' + error.message);
     } else {
@@ -356,7 +356,7 @@ async function deleteSeminar(id) {
 
 // イベント一覧を読み込み
 async function loadEvents() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseDb
         .from('events')
         .select(`
             *,
@@ -403,7 +403,7 @@ function editEvent(id) {
 
 async function deleteEvent(id) {
     if (!confirm('本当に削除しますか？')) return;
-    const { error } = await supabase.from('events').delete().eq('id', id);
+    const { error } = await supabaseDb.from('events').delete().eq('id', id);
     if (error) {
         alert('削除に失敗しました: ' + error.message);
     } else {
@@ -418,7 +418,7 @@ async function deleteEvent(id) {
 
 // 個別相談一覧を読み込み
 async function loadConsultations() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseDb
         .from('consultations')
         .select(`
             *,
@@ -459,7 +459,7 @@ async function updateConsultationStatus(id) {
     const newStatus = prompt('新しいステータスを入力してください（pending/confirmed/completed/cancelled）:');
     if (!newStatus) return;
 
-    const { error } = await supabase
+    const { error } = await supabaseDb
         .from('consultations')
         .update({ status: newStatus })
         .eq('id', id);
@@ -478,7 +478,7 @@ async function updateConsultationStatus(id) {
 
 // 求人一覧を読み込み
 async function loadJobs() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseDb
         .from('jobs')
         .select(`
             *,
@@ -524,7 +524,7 @@ function editJob(id) {
 
 async function deleteJob(id) {
     if (!confirm('本当に削除しますか？')) return;
-    const { error } = await supabase.from('jobs').delete().eq('id', id);
+    const { error } = await supabaseDb.from('jobs').delete().eq('id', id);
     if (error) {
         alert('削除に失敗しました: ' + error.message);
     } else {
@@ -539,7 +539,7 @@ async function deleteJob(id) {
 
 // 記事一覧を読み込み
 async function loadArticles() {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseDb
         .from('knowledge_articles')
         .select('*')
         .order('created_at', { ascending: false });
@@ -599,7 +599,7 @@ function closeArticleModal() {
 
 // 記事データを読み込み
 async function loadArticleData(articleId) {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseDb
         .from('knowledge_articles')
         .select('*')
         .eq('id', articleId)
@@ -645,13 +645,13 @@ document.getElementById('articleForm').addEventListener('submit', async (e) => {
     let error;
     if (articleId) {
         // 更新
-        ({ error } = await supabase
+        ({ error } = await supabaseDb
             .from('knowledge_articles')
             .update(articleData)
             .eq('id', articleId));
     } else {
         // 新規作成
-        ({ error } = await supabase
+        ({ error } = await supabaseDb
             .from('knowledge_articles')
             .insert([articleData]));
     }
@@ -675,7 +675,7 @@ function editArticle(articleId) {
 async function deleteArticle(articleId) {
     if (!confirm('本当に削除しますか？')) return;
 
-    const { error } = await supabase
+    const { error } = await supabaseDb
         .from('knowledge_articles')
         .delete()
         .eq('id', articleId);

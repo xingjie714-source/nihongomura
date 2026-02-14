@@ -285,7 +285,7 @@
     <script src="js/supabase-config.js"></script>
     <script src="js/language.min.js"></script>
     <script>
-        const supabase = window.supabaseClient;
+        const supabaseDb = window.supabaseClient;
 
         // ページ読み込み時に実行
         document.addEventListener('DOMContentLoaded', async function() {
@@ -404,7 +404,7 @@
 
         // 求人に応募
         async function applyJob(jobId) {
-            const { data: { user } } = await supabase.auth.getUser();
+            const { data: { user } } = await supabaseDb.auth.getUser();
 
             if (!user) {
                 alert('応募するにはログインが必要です。');

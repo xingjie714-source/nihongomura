@@ -1,7 +1,7 @@
 // セミナーページのJavaScript
 
 // Supabaseクライアントの初期化
-const supabase = window.supabaseClient;
+const supabaseDb = window.supabaseClient;
 
 // カレンダーのインスタンス
 let calendar;
@@ -47,7 +47,7 @@ function initializeCalendar() {
 // セミナーデータを読み込み
 async function loadSeminars() {
     try {
-        const { data: seminars, error } = await supabase
+        const { data: seminars, error } = await supabaseDb
             .from('seminars')
             .select('*')
             .order('date', { ascending: true });
@@ -174,7 +174,7 @@ function getLevelText(level) {
 // セミナーに申し込む
 async function applySeminar(seminarId) {
     // ログイン状態を確認
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await supabaseDb.auth.getUser();
     
     if (!user) {
         alert('セミナーに申し込むにはログインが必要です。');
@@ -184,7 +184,7 @@ async function applySeminar(seminarId) {
     
     try {
         // 既に申し込み済みかチェック
-        const { data: existingApplication, error: checkError } = await supabase
+        const { data: existingApplication, error: checkError } = await supabaseDb
             .from('seminar_applications')
             .select('*')
             .eq('user_id', user.id)
@@ -197,7 +197,7 @@ async function applySeminar(seminarId) {
         }
         
         // 申し込みを登録
-        const { error: insertError } = await supabase
+        const { error: insertError } = await supabaseDb
             .from('seminar_applications')
             .insert({
                 user_id: user.id,
