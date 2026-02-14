@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ダッシュボード - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #FF6B35, #FF8C42);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.orange {
+            background: #FFE5D9;
+            color: var(--primary-orange);
+        }
+
+        .stat-icon.blue {
+            background: #E3F2FD;
+            color: #1565C0;
+        }
+
+        .stat-icon.green {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .stat-icon.purple {
+            background: #F3E5F5;
+            color: #7B1FA2;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+        }
+
+        .stat-label {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--light-gray);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--medium-gray);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            color: var(--primary-orange);
+            border-bottom-color: var(--primary-orange);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--dark-gray);
+        }
+
+        .btn-add {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-add:hover {
+            background: var(--accent-orange);
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--light-gray);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        td {
+            padding: 1rem;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        tbody tr:hover {
+            background: #FFF8F5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: #E3F2FD;
+            color: #1565C0;
+        }
+
+        .btn-edit:hover {
+            background: #1565C0;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+
+        .btn-delete:hover {
+            background: #C62828;
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--dark-gray);
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--medium-gray);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn-submit {
+            padding: 0.8rem 2rem;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-orange);
+        }
+
+        .btn-cancel {
+            padding: 0.8rem 2rem;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .data-table {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ログイン確認スクリプト -->
+    <script>
+        // ページ読み込み時にログイン状態を確認
+        (function() {
+            const adminAuth = localStorage.getItem('adminAuth') || sessionStorage.getItem('adminAuth');
+            
+            if (!adminAuth) {
+                // 未ログインの場合はログインページへリダイレクト
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            
+            try {
+                const authData = JSON.parse(adminAuth);
+                if (!authData.isAdminLoggedIn) {
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+                
+                // ログイン時間が24時間以上経過している場合はログアウト
+                const loginTime = new Date(authData.loginTime);
+                const now = new Date();
+                const hoursDiff = (now - loginTime) / (1000 * 60 * 60);
+                
+                if (hoursDiff > 24) {
+                    localStorage.removeItem('adminAuth');
+                    sessionStorage.removeItem('adminAuth');
+                    alert('セッションが期限切れです。再度ログインしてください。');
+                    window.location.href = 'admin-login.html';
+                    return;
+                }
+            } catch (e) {
+                console.error('認証データの解析に失敗しました', e);
+                window.location.href = 'admin-login.html';
+                return;
+            }
+        })();
+        
+        // ログアウト関数
+        function logout() {
+            if (confirm('ログアウトしますか？')) {
+                localStorage.removeItem('adminAuth');
+                sessionStorage.removeItem('adminAuth');
+                window.location.href = 'admin-login.html';
+            }
+        }
+    </script>
+
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo"><img src="images/logo.png" alt="日本語村 ロゴ"></a>
+            <button class="mobile-menu-toggle" aria-label="メニュー"><i class="fas fa-bars"></i></button>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="admin.html" class="active">管理者</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="logout-btn" onclick="logout()" style="padding: 0.8rem 1.5rem; background: var(--medium-gray); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                    <i class="fas fa-sign-out-alt"></i> ログアウト
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <div class="admin-container">
+            <!-- ヘッダー -->
+            <div class="admin-header">
+                <div>
+                    <h1>管理者ダッシュボード</h1>
+                    <p>日本語村 管理システム</p>
+                </div>
+            </div>
+
+            <!-- 統計カード -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-number" id="totalUsers">0</div>
+                            <div class="stat-label">登録ユーザー数</div>
+                        </div>
+                        <div class="stat-icon orange">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-number" id="totalSeminars">0</div>
+                            <div class="stat-label">セミナー数</div>
+                        </div>
+                        <div class="stat-icon blue">
+                            <i class="fas fa-video"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-number" id="totalEvents">0</div>
+                            <div class="stat-label">イベント数</div>
+                        </div>
+                        <div class="stat-icon green">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-number" id="totalJobs">0</div>
+                            <div class="stat-label">求人数</div>
+                        </div>
+                        <div class="stat-icon purple">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タブ -->
+            <div class="tabs">
+                <button class="tab active" data-tab="users">ユーザー管理</button>
+                <button class="tab" data-tab="seminars">セミナー管理</button>
+                <button class="tab" data-tab="events">イベント管理</button>
+                <button class="tab" data-tab="consultations">個別相談管理</button>
+                <button class="tab" data-tab="jobs">求人管理</button>
+                <button class="tab" data-tab="articles">記事管理</button>
+            </div>
+
+            <!-- ユーザー管理 -->
+            <div class="tab-content active" id="users">
+                <div class="section-header">
+                    <h2 class="section-title">ユーザー管理</h2>
+                    <button class="btn-add" onclick="downloadUsersCSV()">
+                        <i class="fas fa-download"></i> CSVダウンロード
+                    </button>
+                </div>
+                
+                <!-- フィルター -->
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--dark-gray);">国籍</label>
+                            <select id="filterNationality" style="width: 100%; padding: 0.8rem; border: 1px solid var(--light-gray); border-radius: 8px;">
+                                <option value="">すべて</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--dark-gray);">大学</label>
+                            <input type="text" id="filterUniversity" placeholder="大学名で検索" style="width: 100%; padding: 0.8rem; border: 1px solid var(--light-gray); border-radius: 8px;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--dark-gray);">日本語レベル</label>
+                            <select id="filterJapaneseLevel" style="width: 100%; padding: 0.8rem; border: 1px solid var(--light-gray); border-radius: 8px;">
+                                <option value="">すべて</option>
+                                <option value="N1">N1</option>
+                                <option value="N2">N2</option>
+                                <option value="N3">N3</option>
+                                <option value="N4">N4</option>
+                                <option value="N5">N5</option>
+                                <option value="初級">初級</option>
+                                <option value="中級">中級</option>
+                                <option value="上級">上級</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button onclick="applyFilters()" style="padding: 0.8rem 1.5rem; background: var(--primary-orange); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-filter"></i> フィルター適用
+                        </button>
+                        <button onclick="resetFilters()" style="padding: 0.8rem 1.5rem; background: var(--light-gray); color: var(--dark-gray); border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-redo"></i> リセット
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>氏名</th>
+                                <th>メールアドレス</th>
+                                <th>国籍</th>
+                                <th>大学</th>
+                                <th>専攻</th>
+                                <th>学位レベル</th>
+                                <th>日本語レベル</th>
+                                <th>電話番号</th>
+                                <th>生年月日</th>
+                                <th>卒業予定日</th>
+                                <th>登録日</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- セミナー管理 -->
+            <div class="tab-content" id="seminars">
+                <div class="section-header">
+                    <h2 class="section-title">セミナー管理</h2>
+                    <button class="btn-add" onclick="openSeminarModal()">
+                        <i class="fas fa-plus"></i> 新規追加
+                    </button>
+                </div>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>タイトル</th>
+                                <th>開催日</th>
+                                <th>時間</th>
+                                <th>会場</th>
+                                <th>定員</th>
+                                <th>予約数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="seminarsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- イベント管理 -->
+            <div class="tab-content" id="events">
+                <div class="section-header">
+                    <h2 class="section-title">イベント管理</h2>
+                    <button class="btn-add" onclick="openEventModal()">
+                        <i class="fas fa-plus"></i> 新規追加
+                    </button>
+                </div>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>タイトル</th>
+                                <th>開催日</th>
+                                <th>時間</th>
+                                <th>会場</th>
+                                <th>定員</th>
+                                <th>予約数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 個別相談管理 -->
+            <div class="tab-content" id="consultations">
+                <!-- 相談枠管理 -->
+                <div class="section-header">
+                    <h2 class="section-title">相談枠管理</h2>
+                    <button class="btn-add" onclick="openAddSlotModal()">
+                        <i class="fas fa-plus"></i> 新しい相談枠を追加
+                    </button>
+                </div>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>日時</th>
+                                <th>時間</th>
+                                <th>ステータス</th>
+                                <th>予約者</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="slotsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <!-- 予約管理 -->
+                <div class="section-header" style="margin-top: 3rem;">
+                    <h2 class="section-title">予約管理</h2>
+                </div>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>予約ID</th>
+                                <th>学生名</th>
+                                <th>相談タイプ</th>
+                                <th>日時</th>
+                                <th>ステータス</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 求人管理 -->
+            <div class="tab-content" id="jobs">
+                <div class="section-header">
+                    <h2 class="section-title">求人管理</h2>
+                    <button class="btn-add" onclick="openJobModal()">
+                        <i class="fas fa-plus"></i> 新規追加
+                    </button>
+                </div>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>企業名</th>
+                                <th>職種</th>
+                                <th>勤務地</th>
+                                <th>年収</th>
+                                <th>応募数</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 記事管理 -->
+            <div class="tab-content" id="articles">
+                <div class="section-header">
+                    <h2 class="section-title">就職知識記事管理</h2>
+                    <button class="btn-add" onclick="openArticleModal()">
+                        <i class="fas fa-plus"></i> 新規追加
+                    </button>
+                </div>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>タイトル</th>
+                                <th>タグ</th>
+                                <th>閲覧数</th>
+                                <th>公開状態</th>
+                                <th>公開日</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="articlesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- モーダル（記事追加・編集用） -->
+    <div class="modal" id="articleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="articleModalTitle">記事を追加</h3>
+                <button class="btn-close" onclick="closeArticleModal()">×</button>
+            </div>
+            <form id="articleForm">
+                <input type="hidden" id="articleId">
+                <div class="form-group">
+                    <label for="articleTitleJa">タイトル（日本語） *</label>
+                    <input type="text" id="articleTitleJa" required>
+                </div>
+                <div class="form-group">
+                    <label for="articleExcerptJa">抜粋（日本語） *</label>
+                    <textarea id="articleExcerptJa" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="articleContentJa">本文（日本語） *</label>
+                    <textarea id="articleContentJa" required style="min-height: 300px;"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="articleTags">タグ（カンマ区切り）</label>
+                    <input type="text" id="articleTags" placeholder="例: 就活基礎,ビザ,面接対策">
+                </div>
+                <div class="form-group">
+                    <label for="articleImageUrl">画像URL</label>
+                    <input type="url" id="articleImageUrl">
+                </div>
+                <div class="form-group">
+                    <label for="articlePublished">公開状態</label>
+                    <select id="articlePublished">
+                        <option value="true">公開</option>
+                        <option value="false">下書き</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeArticleModal()">キャンセル</button>
+                    <button type="submit" class="btn-submit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<!-- セミナー追加・編集モーダル -->
+<div class="modal" id="seminarModal">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3 id="seminarModalTitle">セミナーを追加</h3>
+            <button class="btn-close" onclick="closeSeminarModal()">×</button>
+        </div>
+        <form id="seminarForm">
+            <input type="hidden" id="seminarId">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="seminarTitleJa">タイトル（日本語） *</label>
+                    <input type="text" id="seminarTitleJa" required>
+                </div>
+                <div class="form-group">
+                    <label for="seminarTitleEn">タイトル（English）</label>
+                    <input type="text" id="seminarTitleEn">
+                </div>
+                <div class="form-group">
+                    <label for="seminarTitleZh">タイトル（中文）</label>
+                    <input type="text" id="seminarTitleZh">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="seminarDescJa">説明（日本語） *</label>
+                <textarea id="seminarDescJa" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="seminarDescEn">説明（English）</label>
+                <textarea id="seminarDescEn"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="seminarDescZh">説明（中文）</label>
+                <textarea id="seminarDescZh"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="seminarDate">開催日 *</label>
+                    <input type="date" id="seminarDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="seminarStartTime">開始時刻 *</label>
+                    <input type="time" id="seminarStartTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="seminarEndTime">終了時刻 *</label>
+                    <input type="time" id="seminarEndTime" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="seminarVenueJa">会場（日本語） *</label>
+                    <input type="text" id="seminarVenueJa" required>
+                </div>
+                <div class="form-group">
+                    <label for="seminarVenueEn">会場（English）</label>
+                    <input type="text" id="seminarVenueEn">
+                </div>
+                <div class="form-group">
+                    <label for="seminarVenueZh">会場（中文）</label>
+                    <input type="text" id="seminarVenueZh">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="seminarFormat">形式 *</label>
+                    <select id="seminarFormat" required>
+                        <option value="online">オンライン</option>
+                        <option value="offline">対面</option>
+                        <option value="hybrid">ハイブリッド</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="seminarCapacity">定員</label>
+                    <input type="number" id="seminarCapacity" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="seminarJapaneseLevel">日本語レベル</label>
+                    <select id="seminarJapaneseLevel">
+                        <option value="">指定なし</option>
+                        <option value="N5">N5</option>
+                        <option value="N4">N4</option>
+                        <option value="N3">N3</option>
+                        <option value="N2">N2</option>
+                        <option value="N1">N1</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="seminarTargetJa">対象者（日本語）</label>
+                <input type="text" id="seminarTargetJa" placeholder="例: 留学生全般">
+            </div>
+
+            <div class="form-group">
+                <label for="seminarTags">タグ（カンマ区切り）</label>
+                <input type="text" id="seminarTags" placeholder="例: 就活基礎,初心者歓迎,English OK">
+            </div>
+
+            <div class="form-group">
+                <label for="seminarImageUrl">画像URL</label>
+                <input type="url" id="seminarImageUrl">
+                <small>または画像をアップロード:</small>
+                <input type="file" id="seminarImageFile" accept="image/*" style="margin-top: 0.5rem;">
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" onclick="closeSeminarModal()">キャンセル</button>
+                <button type="submit" class="btn-submit">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- イベント追加・編集モーダル -->
+<div class="modal" id="eventModal">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3 id="eventModalTitle">イベントを追加</h3>
+            <button class="btn-close" onclick="closeEventModal()">×</button>
+        </div>
+        <form id="eventForm">
+            <input type="hidden" id="eventId">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="eventTitleJa">タイトル（日本語） *</label>
+                    <input type="text" id="eventTitleJa" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventTitleEn">タイトル（English）</label>
+                    <input type="text" id="eventTitleEn">
+                </div>
+                <div class="form-group">
+                    <label for="eventTitleZh">タイトル（中文）</label>
+                    <input type="text" id="eventTitleZh">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="eventDescJa">説明（日本語） *</label>
+                <textarea id="eventDescJa" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="eventCompanyJa">企業名（日本語） *</label>
+                <input type="text" id="eventCompanyJa" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventIndustryJa">業界（日本語）</label>
+                <input type="text" id="eventIndustryJa" placeholder="例: IT・通信">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="eventDate">開催日 *</label>
+                    <input type="date" id="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventStartTime">開始時刻 *</label>
+                    <input type="time" id="eventStartTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventEndTime">終了時刻 *</label>
+                    <input type="time" id="eventEndTime" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="eventVenueJa">会場（日本語） *</label>
+                    <input type="text" id="eventVenueJa" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventFormat">形式 *</label>
+                    <select id="eventFormat" required>
+                        <option value="online">オンライン</option>
+                        <option value="offline">対面</option>
+                        <option value="hybrid">ハイブリッド</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="eventCapacity">定員</label>
+                    <input type="number" id="eventCapacity" min="1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="eventImageUrl">画像URL</label>
+                <input type="url" id="eventImageUrl">
+                <small>または画像をアップロード:</small>
+                <input type="file" id="eventImageFile" accept="image/*" style="margin-top: 0.5rem;">
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" onclick="closeEventModal()">キャンセル</button>
+                <button type="submit" class="btn-submit">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 求人追加・編集モーダル -->
+<div class="modal" id="jobModal">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3 id="jobModalTitle">求人を追加</h3>
+            <button class="btn-close" onclick="closeJobModal()">×</button>
+        </div>
+        <form id="jobForm">
+            <input type="hidden" id="jobId">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="jobCompanyJa">企業名（日本語） *</label>
+                    <input type="text" id="jobCompanyJa" required>
+                </div>
+                <div class="form-group">
+                    <label for="jobCompanyEn">企業名（English）</label>
+                    <input type="text" id="jobCompanyEn">
+                </div>
+                <div class="form-group">
+                    <label for="jobCompanyZh">企業名（中文）</label>
+                    <input type="text" id="jobCompanyZh">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="jobTitleJa">職種（日本語） *</label>
+                    <input type="text" id="jobTitleJa" required>
+                </div>
+                <div class="form-group">
+                    <label for="jobTitleEn">職種（English）</label>
+                    <input type="text" id="jobTitleEn">
+                </div>
+                <div class="form-group">
+                    <label for="jobTitleZh">職種（中文）</label>
+                    <input type="text" id="jobTitleZh">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="jobDescJa">仕事内容（日本語） *</label>
+                <textarea id="jobDescJa" required style="min-height: 150px;"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="jobLocation">勤務地 *</label>
+                    <select id="jobLocation" required>
+                        <option value="tokyo">東京都</option>
+                        <option value="osaka">大阪府</option>
+                        <option value="nagoya">愛知県</option>
+                        <option value="fukuoka">福岡県</option>
+                        <option value="remote">リモート</option>
+                        <option value="other">その他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jobType">雇用形態 *</label>
+                    <select id="jobType" required>
+                        <option value="full-time">正社員</option>
+                        <option value="contract">契約社員</option>
+                        <option value="part-time">アルバイト</option>
+                        <option value="intern">インターン</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="jobIndustry">業界</label>
+                    <input type="text" id="jobIndustry" placeholder="例: IT">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="jobSalaryMin">想定年収（最低）</label>
+                    <input type="number" id="jobSalaryMin" min="0" placeholder="万円">
+                </div>
+                <div class="form-group">
+                    <label for="jobSalaryMax">想定年収（最高）</label>
+                    <input type="number" id="jobSalaryMax" min="0" placeholder="万円">
+                </div>
+                <div class="form-group">
+                    <label for="jobJapaneseLevel">日本語レベル</label>
+                    <select id="jobJapaneseLevel">
+                        <option value="">指定なし</option>
+                        <option value="N5">N5</option>
+                        <option value="N4">N4</option>
+                        <option value="N3">N3</option>
+                        <option value="N2">N2</option>
+                        <option value="N1">N1</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="jobSkills">必要スキル（カンマ区切り）</label>
+                <input type="text" id="jobSkills" placeholder="例: JavaScript,React,Node.js">
+            </div>
+
+            <div class="form-group">
+                <label for="jobImageUrl">画像URL</label>
+                <input type="url" id="jobImageUrl">
+                <small>または画像をアップロード:</small>
+                <input type="file" id="jobImageFile" accept="image/*" style="margin-top: 0.5rem;">
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" onclick="closeJobModal()">キャンセル</button>
+                <button type="submit" class="btn-submit">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+</style>
+
+<!-- 相談枠追加・編集モーダル -->
+<div id="slotModal" class="modal">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h2 id="slotModalTitle">相談枠を追加</h2>
+            <button class="modal-close" onclick="closeSlotModal()">&times;</button>
+        </div>
+        <form id="slotForm">
+            <input type="hidden" id="slotId" name="id">
+            
+            <div class="form-group">
+                <label for="slotDate">日付 *</label>
+                <input type="date" id="slotDate" name="date" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="slotStartTime">開始時刻 *</label>
+                    <input type="time" id="slotStartTime" name="startTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="slotEndTime">終了時刻 *</label>
+                    <input type="time" id="slotEndTime" name="endTime" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="slotStatus">ステータス</label>
+                <select id="slotStatus" name="status">
+                    <option value="available">空き</option>
+                    <option value="booked">予約済み</option>
+                    <option value="unavailable">利用不可</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" onclick="closeSlotModal()">キャンセル</button>
+                <button type="submit" class="btn-submit">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 予約詳細モーダル -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h2>予約詳細</h2>
+            <button class="modal-close" onclick="closeBookingModal()">&times;</button>
+        </div>
+        <div id="bookingDetails" style="padding: 1.5rem;">
+            <!-- JavaScriptで動的に生成 -->
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn-cancel" onclick="closeBookingModal()">閉じる</button>
+            <button type="button" class="btn-delete" onclick="cancelBooking()">予約をキャンセル</button>
+        </div>
+    </div>
+</div>
+
+    <!-- フッター -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="contact.html" data-ja="お問い合わせ" data-en="Contact" data-zh="联系我们">お問い合わせ</a>
+                <span>|</span>
+                <a href="privacy.html" data-ja="プライバシーポリシー" data-en="Privacy Policy" data-zh="隐私政策">プライバシーポリシー</a>
+                <span>|</span>
+                <a href="company.html" data-ja="運営会社" data-en="Company" data-zh="运营公司">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/image-upload.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-forms.js"></script>
+    <script src="js/admin-consultations.js"></script>
+</body>
+</html>
