@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>就職知識 - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .knowledge-page {
+            min-height: calc(100vh - 200px);
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #FF6B35, #FF8C42);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .categories-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .category-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        .category-icon {
+            font-size: 3rem;
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+        }
+        .category-title {
+            font-size: 1.5rem;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+        .category-description {
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+        .articles-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .article-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #FF6B35, #FF8C42);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .article-image i {
+            font-size: 4rem;
+            color: white;
+        }
+        .article-content {
+            padding: 1.5rem;
+        }
+        .article-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-title {
+            font-size: 1.25rem;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+        .article-description {
+            color: var(--medium-gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--medium-gray);
+            font-size: 0.875rem;
+        }
+        .no-articles {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--medium-gray);
+        }
+        .no-articles i {
+            font-size: 4rem;
+            color: var(--light-gray);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="日本語村 ロゴ">
+                </a>
+                <nav class="nav">
+                    <a href="seminars-public.html" data-i18n="nav.seminars">セミナー</a>
+                    <a href="events-public.html" data-i18n="nav.events">イベント</a>
+                    <a href="consultations-public.html" data-i18n="nav.consultations">個別相談</a>
+                    <a href="jobs-public.html" data-i18n="nav.jobs">求人検索</a>
+                    <a href="knowledge.html" data-i18n="nav.knowledge">就職知識</a>
+                </nav>
+                <div class="header-actions">
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="ja">日本語</button>
+                        <span>/</span>
+                        <button class="lang-btn" data-lang="en">English</button>
+                        <span>/</span>
+                        <button class="lang-btn" data-lang="zh">中文</button>
+                    </div>
+                    <a href="auth.html" class="btn btn-primary" data-i18n="nav.login">ログイン</a>
+                    <a href="auth.html" class="btn btn-secondary" data-i18n="nav.register">無料会員登録</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="knowledge-page">
+        <!-- ヒーローセクション -->
+        <section class="hero-section">
+            <h1>就職知識</h1>
+            <p>留学生のための就職活動ガイド</p>
+        </section>
+
+        <!-- カテゴリーセクション -->
+        <section class="categories-section">
+            <h2>カテゴリー</h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterByCategory('ビザ')">
+                    <div class="category-icon">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <h3 class="category-title">ビザ・在留資格</h3>
+                    <p class="category-description">就労ビザの種類、申請方法、必要書類など</p>
+                </div>
+                <div class="category-card" onclick="filterByCategory('履歴書')">
+                    <div class="category-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="category-title">履歴書・ES</h3>
+                    <p class="category-description">履歴書の書き方、エントリーシートの作成方法</p>
+                </div>
+                <div class="category-card" onclick="filterByCategory('面接')">
+                    <div class="category-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="category-title">面接対策</h3>
+                    <p class="category-description">面接のマナー、よくある質問、回答例</p>
+                </div>
+                <div class="category-card" onclick="filterByCategory('ビジネスマナー')">
+                    <div class="category-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="category-title">ビジネスマナー</h3>
+                    <p class="category-description">日本のビジネスマナー、敬語の使い方</p>
+                </div>
+                <div class="category-card" onclick="filterByCategory('業界研究')">
+                    <div class="category-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 class="category-title">業界・企業研究</h3>
+                    <p class="category-description">業界の特徴、企業の選び方、調査方法</p>
+                </div>
+                <div class="category-card" onclick="filterByCategory('その他')">
+                    <div class="category-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="category-title">その他</h3>
+                    <p class="category-description">就活スケジュール、内定後の手続きなど</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 記事一覧セクション -->
+        <section class="articles-section">
+            <h2>最新記事</h2>
+            <div id="articles-container" class="articles-grid">
+                <!-- 記事カードがJavaScriptで動的に生成されます -->
+            </div>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="contact.html">お問い合わせ</a> |
+                <a href="privacy.html">プライバシーポリシー</a> |
+                <a href="company.html">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/language.js"></script>
+    <script>
+        const supabase = window.supabaseClient;
+
+        // ページ読み込み時に実行
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadArticles();
+        });
+
+        // 記事を読み込み
+        async function loadArticles(category = null) {
+            try {
+                let query = supabase
+                    .from('knowledge_articles')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (category) {
+                    query = query.eq('category', category);
+                }
+
+                const { data: articles, error } = await query;
+
+                if (error) throw error;
+
+                displayArticles(articles);
+            } catch (error) {
+                console.error('記事読み込みエラー:', error);
+                document.getElementById('articles-container').innerHTML = `
+                    <div class="no-articles">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>記事の読み込みに失敗しました。</p>
+                    </div>
+                `;
+            }
+        }
+
+        // 記事を表示
+        function displayArticles(articles) {
+            const container = document.getElementById('articles-container');
+
+            if (!articles || articles.length === 0) {
+                container.innerHTML = `
+                    <div class="no-articles">
+                        <i class="fas fa-book-open"></i>
+                        <p>現在、記事はありません。</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = articles.map(article => {
+                const categoryIcons = {
+                    'ビザ': 'fa-passport',
+                    '履歴書': 'fa-file-alt',
+                    '面接': 'fa-comments',
+                    'ビジネスマナー': 'fa-handshake',
+                    '業界研究': 'fa-industry',
+                    'その他': 'fa-book'
+                };
+                const icon = categoryIcons[article.category] || 'fa-book';
+
+                return `
+                    <div class="article-card" onclick="viewArticle('${article.id}')">
+                        <div class="article-image">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category">${article.category || 'その他'}</span>
+                            <h3 class="article-title">${article.title}</h3>
+                            <p class="article-description">${article.description || ''}</p>
+                            <div class="article-meta">
+                                <span><i class="fas fa-calendar"></i> ${new Date(article.created_at).toLocaleDateString('ja-JP')}</span>
+                                <span><i class="fas fa-eye"></i> ${article.views || 0}回</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // カテゴリーでフィルター
+        function filterByCategory(category) {
+            loadArticles(category);
+        }
+
+        // 記事を表示
+        function viewArticle(articleId) {
+            window.location.href = `article.html?id=${articleId}`;
+        }
+    </script>
+</body>
+</html>
