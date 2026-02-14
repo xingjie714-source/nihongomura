@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイページ - 日本語村</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .mypage-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .mypage-header {
+            background: linear-gradient(135deg, #FF6B35, #FF8C42);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        .mypage-header h1 {
+            font-size: 2rem;
+            margin: 0 0 0.5rem 0;
+        }
+        .profile-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+        .profile-section h2 {
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .profile-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .profile-item label {
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+        }
+        .profile-item .value {
+            color: var(--medium-gray);
+            padding: 0.75rem;
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: var(--primary-orange);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #E55A2B;
+        }
+        .btn-secondary {
+            background: white;
+            color: var(--primary-orange);
+            border: 2px solid var(--primary-orange);
+        }
+        .btn-secondary:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.png" alt="日本語村 ロゴ">
+                </a>
+                <nav class="nav">
+                    <a href="seminars-public.html" data-i18n="nav.seminars">セミナー</a>
+                    <a href="events-public.html" data-i18n="nav.events">イベント</a>
+                    <a href="consultations-public.html" data-i18n="nav.consultations">個別相談</a>
+                    <a href="jobs-public.html" data-i18n="nav.jobs">求人検索</a>
+                    <a href="knowledge.html" data-i18n="nav.knowledge">就職知識</a>
+                </nav>
+                <div class="header-actions">
+                    <div class="language-switcher">
+                        <button class="lang-btn active" data-lang="ja">日本語</button>
+                        <span>/</span>
+                        <button class="lang-btn" data-lang="en">English</button>
+                        <span>/</span>
+                        <button class="lang-btn" data-lang="zh">中文</button>
+                    </div>
+                    <a href="mypage.html" class="btn btn-primary" id="mypageBtn" data-i18n="nav.mypage">マイページ</a>
+                    <button class="btn btn-secondary" id="logoutBtn" data-i18n="nav.logout">ログアウト</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- マイページコンテンツ -->
+    <div class="mypage-container">
+        <div class="mypage-header">
+            <h1>マイページ</h1>
+            <p id="welcomeMessage">ようこそ、<span id="userName"></span>さん</p>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-section">
+                <h2>基本情報</h2>
+                <div class="profile-grid">
+                    <div class="profile-item">
+                        <label>氏名</label>
+                        <div class="value" id="profileName">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>メールアドレス</label>
+                        <div class="value" id="profileEmail">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>生年月日</label>
+                        <div class="value" id="profileBirthdate">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>国籍</label>
+                        <div class="value" id="profileNationality">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>電話番号</label>
+                        <div class="value" id="profilePhone">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2>学歴情報</h2>
+                <div class="profile-grid">
+                    <div class="profile-item">
+                        <label>大学名</label>
+                        <div class="value" id="profileUniversity">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>学位レベル</label>
+                        <div class="value" id="profileDegreeLevel">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>専攻</label>
+                        <div class="value" id="profileMajor">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>卒業予定日</label>
+                        <div class="value" id="profileGraduationDate">-</div>
+                    </div>
+                    <div class="profile-item">
+                        <label>日本語レベル</label>
+                        <div class="value" id="profileJapaneseLevel">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="window.location.href='edit-profile.html'">
+                    <i class="fas fa-edit"></i> プロフィールを編集
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">
+                    <i class="fas fa-home"></i> トップページへ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="contact.html">お問い合わせ</a> |
+                <a href="privacy.html">プライバシーポリシー</a> |
+                <a href="company.html">運営会社</a>
+            </div>
+            <p class="copyright">Copyright © At One Co.,Ltd. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/language.js"></script>
+    <script>
+        const supabase = window.supabaseClient;
+
+        // ログイン状態をチェック
+        async function checkAuth() {
+            const { data: { user } } = await supabase.auth.getUser();
+            
+            if (!user) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            // ユーザー情報を取得
+            await loadUserProfile(user.id);
+        }
+
+        // ユーザープロフィールを読み込み
+        async function loadUserProfile(userId) {
+            try {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('id', userId)
+                    .single();
+
+                if (error) throw error;
+
+                if (data) {
+                    document.getElementById('userName').textContent = data.name || '';
+                    document.getElementById('profileName').textContent = data.name || '-';
+                    document.getElementById('profileEmail').textContent = data.email || '-';
+                    document.getElementById('profileBirthdate').textContent = data.birthdate || '-';
+                    document.getElementById('profileNationality').textContent = data.nationality || '-';
+                    document.getElementById('profilePhone').textContent = data.phone || '-';
+                    document.getElementById('profileUniversity').textContent = data.university || '-';
+                    document.getElementById('profileDegreeLevel').textContent = data.degree_level || '-';
+                    document.getElementById('profileMajor').textContent = data.major || '-';
+                    document.getElementById('profileGraduationDate').textContent = data.graduation_date || '-';
+                    document.getElementById('profileJapaneseLevel').textContent = data.japanese_level || '-';
+                }
+            } catch (error) {
+                console.error('プロフィール読み込みエラー:', error);
+                alert('プロフィール情報の読み込みに失敗しました。');
+            }
+        }
+
+        // ログアウト
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                console.error('ログアウトエラー:', error);
+                alert('ログアウトに失敗しました。');
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        // ページ読み込み時に実行
+        checkAuth();
+    </script>
+</body>
+</html>
