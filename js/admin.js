@@ -1,31 +1,10 @@
-// 管理者ダッシュボードのメインスクリプト
-
-// グローバル変数
-let currentTab = 'users';
-let users = [];
-let seminars = [];
-let events = [];
-let jobs = [];
-
-// ページ読み込み時の初期化
-document.addEventListener('DOMContentLoaded', async () => {
-    // 管理者認証チェック
-    await checkAdminAuth();
-    
-    // 初期データ読み込み
-    await loadDashboardData();
-    
-    // タブ切り替えイベント
-    setupTabListeners();
-});
-
-// 管理者認証チェック
-async function checkAdminAuth() {
+// 管理者権限チェック関数
+async function checkAdminRole() {
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
         window.location.href = 'admin-login.html';
-        return;
+        return false;
     }
     
     // プロフィール取得
@@ -38,279 +17,658 @@ async function checkAdminAuth() {
     if (!profile || profile.role !== 'admin') {
         alert('管理者権限がありません');
         window.location.href = 'index.html';
-        return;
+        return false;
     }
-}
-
-// ダッシュボードデータ読み込み
-async function loadDashboardData() {
-    await Promise.all([
-        loadUsers(),
-        loadSeminars(),
-        loadEvents(),
-        loadJobs()
-    ]);
     
-    updateStats();
-    renderCurrentTab();
+    return true;
 }
 
-// ユーザーデータ読み込み
+// 管理者権限チェック
+(async () => {
+    const isAdmin = await checkAdminRole();
+    if (isAdmin) {
+        loadDashboard();
+    }
+})();
+
+// ダッシュボードを読み込み
+async function loadDashboard() {
+    await loadStats();
+    await loadUsers();
+    await loadSeminars();
+    await loadEvents();
+    await loadConsultations();
+    await loadJobs();
+    await loadArticles();
+}
+
+// 統計情報を読み込み
+async function loadStats() {
+    // ユーザー数
+    const { count: usersCount } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true });
+    document.getElementById('totalUsers').textContent = usersCount || 0;
+
+    // セミナー数
+    const { count: seminarsCount } = await supabase
+        .from('seminars')
+        .select('*', { count: 'exact', head: true });
+    document.getElementById('totalSeminars').textContent = seminarsCount || 0;
+
+    // イベント数
+    const { count: eventsCount } = await supabase
+        .from('events')
+        .select('*', { count: 'exact', head: true });
+    document.getElementById('totalEvents').textContent = eventsCount || 0;
+
+    // 求人数
+    const { count: jobsCount } = await supabase
+        .from('jobs')
+        .select('*', { count: 'exact', head: true });
+    document.getElementById('totalJobs').textContent = jobsCount || 0;
+}
+
+// タブ切り替え
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const tabName = tab.dataset.tab;
+        
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+    });
+});
+
+// ========================================
+// ユーザー管理機能（拡張版）
+// ========================================
+
+// グローバル変数: すべてのユーザーデータを保存
+let allUsers = [];
+
+// ユーザー一覧を読み込み（拡張版）
 async function loadUsers() {
     const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .order('created_at', { ascending: false });
-    
+
     if (error) {
-        console.error('ユーザーデータ取得エラー:', error);
+        console.error('Error loading users:', error);
+        document.getElementById('usersTableBody').innerHTML = '<tr><td colspan="11" style="text-align: center; color: var(--medium-gray);">データの読み込みに失敗しました</td></tr>';
+        return;
+    }
+
+    allUsers = data || [];
+    
+    // 国籍フィルターのオプションを更新
+    updateNationalityFilter();
+    
+    // ユーザーを表示
+    displayUsers(allUsers);
+}
+
+// ユーザーを表示する関数
+function displayUsers(users) {
+    const tbody = document.getElementById('usersTableBody');
+    
+    if (!users || users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="11" style="text-align: center; color: var(--medium-gray);">登録ユーザーがいません</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = users.map(user => `
+        <tr>
+            <td>${user.full_name || '-'}</td>
+            <td>${user.email || '-'}</td>
+            <td>${user.nationality || '-'}</td>
+            <td>${user.university || '-'}</td>
+            <td>${user.major || '-'}</td>
+            <td>${user.degree_level || '-'}</td>
+            <td>${user.japanese_level || '-'}</td>
+            <td>${user.phone || '-'}</td>
+            <td>${formatDate(user.birth_date)}</td>
+            <td>${formatDate(user.graduation_date)}</td>
+            <td>${formatDate(user.created_at)}</td>
+        </tr>
+    `).join('');
+}
+
+// 国籍フィルターのオプションを更新
+function updateNationalityFilter() {
+    const nationalities = [...new Set(allUsers.map(u => u.nationality).filter(n => n))].sort();
+    const select = document.getElementById('filterNationality');
+    
+    if (!select) return; // フィルター要素がない場合は終了
+    
+    // 既存のオプションをクリア（「すべて」以外）
+    select.innerHTML = '<option value="">すべて</option>';
+    
+    // 国籍オプションを追加
+    nationalities.forEach(nationality => {
+        const option = document.createElement('option');
+        option.value = nationality;
+        option.textContent = nationality;
+        select.appendChild(option);
+    });
+}
+
+// フィルターを適用
+function applyFilters() {
+    const nationalityFilter = document.getElementById('filterNationality').value.toLowerCase();
+    const universityFilter = document.getElementById('filterUniversity').value.toLowerCase();
+    const japaneseLevelFilter = document.getElementById('filterJapaneseLevel').value;
+    
+    const filteredUsers = allUsers.filter(user => {
+        const matchNationality = !nationalityFilter || (user.nationality || '').toLowerCase() === nationalityFilter;
+        const matchUniversity = !universityFilter || (user.university || '').toLowerCase().includes(universityFilter);
+        const matchJapaneseLevel = !japaneseLevelFilter || user.japanese_level === japaneseLevelFilter;
+        
+        return matchNationality && matchUniversity && matchJapaneseLevel;
+    });
+    
+    displayUsers(filteredUsers);
+}
+
+// フィルターをリセット
+function resetFilters() {
+    document.getElementById('filterNationality').value = '';
+    document.getElementById('filterUniversity').value = '';
+    document.getElementById('filterJapaneseLevel').value = '';
+    displayUsers(allUsers);
+}
+
+// CSVダウンロード機能
+function downloadUsersCSV() {
+    if (!allUsers || allUsers.length === 0) {
+        alert('ダウンロードするデータがありません');
         return;
     }
     
-    users = data || [];
+    // CSVヘッダー
+    const headers = [
+        '氏名',
+        'メールアドレス',
+        '国籍',
+        '大学',
+        '専攻',
+        '学位レベル',
+        '日本語レベル',
+        '電話番号',
+        '生年月日',
+        '卒業予定日',
+        '登録日'
+    ];
+    
+    // CSVデータ
+    const rows = allUsers.map(user => [
+        user.full_name || '',
+        user.email || '',
+        user.nationality || '',
+        user.university || '',
+        user.major || '',
+        user.degree_level || '',
+        user.japanese_level || '',
+        user.phone || '',
+        formatDate(user.birth_date),
+        formatDate(user.graduation_date),
+        formatDate(user.created_at)
+    ]);
+    
+    // CSV文字列を生成
+    const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+    ].join('\n');
+    
+    // BOM付きUTF-8でダウンロード
+    const bom = '\uFEFF';
+    const blob = new Blob([bom + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    const now = new Date();
+    const filename = `users_${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}.csv`;
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
-// セミナーデータ読み込み
+// ========================================
+// セミナー管理
+// ========================================
+
+// セミナー一覧を読み込み
 async function loadSeminars() {
     const { data, error } = await supabase
         .from('seminars')
-        .select('*')
+        .select(`
+            *,
+            seminar_bookings (count)
+        `)
         .order('date', { ascending: false });
+
+    const tbody = document.getElementById('seminarsTableBody');
     
-    if (error) {
-        console.error('セミナーデータ取得エラー:', error);
+    if (error || !data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--medium-gray);">セミナーがありません</td></tr>';
         return;
     }
-    
-    seminars = data || [];
+
+    tbody.innerHTML = data.map(seminar => {
+        const bookingCount = seminar.seminar_bookings ? seminar.seminar_bookings.length : 0;
+        return `
+            <tr>
+                <td>${seminar.title_ja}</td>
+                <td>${formatDate(seminar.date)}</td>
+                <td>${formatTime(seminar.start_time)} - ${formatTime(seminar.end_time)}</td>
+                <td>${seminar.venue_ja}</td>
+                <td>${seminar.capacity || '-'}</td>
+                <td>${bookingCount}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-edit" onclick="editSeminar('${seminar.id}')">編集</button>
+                        <button class="btn-delete" onclick="deleteSeminar('${seminar.id}')">削除</button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
 }
 
-// イベントデータ読み込み
+// セミナーを開く（プレースホルダー）
+function openSeminarModal() {
+    alert('セミナー追加機能は実装中です。データベースに直接追加してください。');
+}
+
+function editSeminar(id) {
+    alert('セミナー編集機能は実装中です。');
+}
+
+async function deleteSeminar(id) {
+    if (!confirm('本当に削除しますか？')) return;
+    const { error } = await supabase.from('seminars').delete().eq('id', id);
+    if (error) {
+        alert('削除に失敗しました: ' + error.message);
+    } else {
+        alert('削除しました');
+        loadSeminars();
+    }
+}
+
+// ========================================
+// イベント管理
+// ========================================
+
+// イベント一覧を読み込み
 async function loadEvents() {
     const { data, error } = await supabase
         .from('events')
-        .select('*')
+        .select(`
+            *,
+            event_bookings (count)
+        `)
         .order('date', { ascending: false });
+
+    const tbody = document.getElementById('eventsTableBody');
     
-    if (error) {
-        console.error('イベントデータ取得エラー:', error);
+    if (error || !data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--medium-gray);">イベントがありません</td></tr>';
         return;
     }
-    
-    events = data || [];
+
+    tbody.innerHTML = data.map(event => {
+        const bookingCount = event.event_bookings ? event.event_bookings.length : 0;
+        return `
+            <tr>
+                <td>${event.title_ja}</td>
+                <td>${formatDate(event.date)}</td>
+                <td>${formatTime(event.start_time)} - ${formatTime(event.end_time)}</td>
+                <td>${event.venue_ja}</td>
+                <td>${event.capacity || '-'}</td>
+                <td>${bookingCount}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-edit" onclick="editEvent('${event.id}')">編集</button>
+                        <button class="btn-delete" onclick="deleteEvent('${event.id}')">削除</button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
 }
 
-// 求人データ読み込み
+// イベントを開く（プレースホルダー）
+function openEventModal() {
+    alert('イベント追加機能は実装中です。データベースに直接追加してください。');
+}
+
+function editEvent(id) {
+    alert('イベント編集機能は実装中です。');
+}
+
+async function deleteEvent(id) {
+    if (!confirm('本当に削除しますか？')) return;
+    const { error } = await supabase.from('events').delete().eq('id', id);
+    if (error) {
+        alert('削除に失敗しました: ' + error.message);
+    } else {
+        alert('削除しました');
+        loadEvents();
+    }
+}
+
+// ========================================
+// 個別相談管理
+// ========================================
+
+// 個別相談一覧を読み込み
+async function loadConsultations() {
+    const { data, error } = await supabase
+        .from('consultations')
+        .select(`
+            *,
+            profiles (full_name)
+        `)
+        .order('date', { ascending: false });
+
+    const tbody = document.getElementById('consultationsTableBody');
+    
+    if (error || !data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--medium-gray);">個別相談の予約がありません</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = data.map(consultation => {
+        const statusText = consultation.status === 'confirmed' ? '予約確定' : 
+                          consultation.status === 'cancelled' ? 'キャンセル済み' : 
+                          consultation.status === 'completed' ? '完了' : '保留中';
+        return `
+            <tr>
+                <td>${consultation.profiles?.full_name || '-'}</td>
+                <td>${consultation.consultation_type}</td>
+                <td>${formatDate(consultation.date)} ${consultation.time_slot}</td>
+                <td>${consultation.preferred_language}</td>
+                <td>${statusText}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-edit" onclick="updateConsultationStatus('${consultation.id}')">ステータス変更</button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// 個別相談のステータスを更新
+async function updateConsultationStatus(id) {
+    const newStatus = prompt('新しいステータスを入力してください（pending/confirmed/completed/cancelled）:');
+    if (!newStatus) return;
+
+    const { error } = await supabase
+        .from('consultations')
+        .update({ status: newStatus })
+        .eq('id', id);
+
+    if (error) {
+        alert('更新に失敗しました: ' + error.message);
+    } else {
+        alert('更新しました');
+        loadConsultations();
+    }
+}
+
+// ========================================
+// 求人管理
+// ========================================
+
+// 求人一覧を読み込み
 async function loadJobs() {
     const { data, error } = await supabase
         .from('jobs')
+        .select(`
+            *,
+            job_applications (count)
+        `)
+        .order('created_at', { ascending: false });
+
+    const tbody = document.getElementById('jobsTableBody');
+    
+    if (error || !data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--medium-gray);">求人がありません</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = data.map(job => {
+        const applicationCount = job.job_applications ? job.job_applications.length : 0;
+        return `
+            <tr>
+                <td>${job.company_name_ja}</td>
+                <td>${job.title_ja}</td>
+                <td>${job.location_name_ja || job.location}</td>
+                <td>${job.salary_min ? `${job.salary_min}万円〜` : '-'}</td>
+                <td>${applicationCount}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-edit" onclick="editJob('${job.id}')">編集</button>
+                        <button class="btn-delete" onclick="deleteJob('${job.id}')">削除</button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+// 求人を開く（プレースホルダー）
+function openJobModal() {
+    alert('求人追加機能は実装中です。データベースに直接追加してください。');
+}
+
+function editJob(id) {
+    alert('求人編集機能は実装中です。');
+}
+
+async function deleteJob(id) {
+    if (!confirm('本当に削除しますか？')) return;
+    const { error } = await supabase.from('jobs').delete().eq('id', id);
+    if (error) {
+        alert('削除に失敗しました: ' + error.message);
+    } else {
+        alert('削除しました');
+        loadJobs();
+    }
+}
+
+// ========================================
+// 記事管理
+// ========================================
+
+// 記事一覧を読み込み
+async function loadArticles() {
+    const { data, error } = await supabase
+        .from('knowledge_articles')
         .select('*')
         .order('created_at', { ascending: false });
-    
-    if (error) {
-        console.error('求人データ取得エラー:', error);
-        return;
-    }
-    
-    jobs = data || [];
-}
 
-// 統計情報更新
-function updateStats() {
-    document.querySelector('.stat-card:nth-child(1) .stat-number').textContent = users.length;
-    document.querySelector('.stat-card:nth-child(2) .stat-number').textContent = seminars.length;
-    document.querySelector('.stat-card:nth-child(3) .stat-number').textContent = events.length;
-    document.querySelector('.stat-card:nth-child(4) .stat-number').textContent = jobs.length;
-}
-
-// タブリスナー設定
-function setupTabListeners() {
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            currentTab = btn.dataset.tab;
-            
-            // アクティブタブ切り替え
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            // コンテンツ表示
-            renderCurrentTab();
-        });
-    });
-}
-
-// 現在のタブをレンダリング
-function renderCurrentTab() {
-    const contentArea = document.querySelector('.tab-content.active');
-    if (!contentArea) return;
-    
-    switch (currentTab) {
-        case 'users':
-            renderUsersTable();
-            break;
-        case 'seminars':
-            renderSeminarsTable();
-            break;
-        case 'events':
-            renderEventsTable();
-            break;
-        case 'consultations':
-            // admin-consultations.jsで処理
-            break;
-        case 'jobs':
-            renderJobsTable();
-            break;
-        case 'articles':
-            renderArticlesTable();
-            break;
-    }
-}
-
-// ユーザーテーブルレンダリング
-function renderUsersTable() {
-    const tbody = document.getElementById('usersTableBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    
-    if (users.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--medium-gray);">登録ユーザーがいません</td></tr>';
-        return;
-    }
-    
-    users.forEach(user => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${escapeHtml(user.full_name || '-')}</td>
-            <td>${escapeHtml(user.email || '-')}</td>
-            <td>${escapeHtml(user.nationality || '-')}</td>
-            <td>${escapeHtml(user.university || '-')}</td>
-            <td>${escapeHtml(user.japanese_level || '-')}</td>
-            <td>${formatDate(user.created_at)}</td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
-
-// セミナーテーブルレンダリング
-function renderSeminarsTable() {
-    const tbody = document.getElementById('seminarsTableBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    
-    if (seminars.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--medium-gray);">セミナーがありません</td></tr>';
-        return;
-    }
-    
-    seminars.forEach(seminar => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${escapeHtml(seminar.title_ja || '-')}</td>
-            <td>${formatDate(seminar.date)}</td>
-            <td>${escapeHtml(seminar.speaker || '-')}</td>
-            <td><span class="status-badge status-${seminar.status}">${getStatusText(seminar.status)}</span></td>
-            <td>
-                <button class="btn-icon" onclick="editSeminar('${seminar.id}')"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon btn-delete" onclick="deleteSeminar('${seminar.id}')"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
-
-// イベントテーブルレンダリング
-function renderEventsTable() {
-    const tbody = document.getElementById('eventsTableBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    
-    if (events.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--medium-gray);">イベントがありません</td></tr>';
-        return;
-    }
-    
-    events.forEach(event => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${escapeHtml(event.title_ja || '-')}</td>
-            <td>${formatDate(event.date)}</td>
-            <td>${escapeHtml(event.location || '-')}</td>
-            <td><span class="status-badge status-${event.status}">${getStatusText(event.status)}</span></td>
-            <td>
-                <button class="btn-icon" onclick="editEvent('${event.id}')"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon btn-delete" onclick="deleteEvent('${event.id}')"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
-
-// 求人テーブルレンダリング
-function renderJobsTable() {
-    const tbody = document.getElementById('jobsTableBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '';
-    
-    if (jobs.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--medium-gray);">求人がありません</td></tr>';
-        return;
-    }
-    
-    jobs.forEach(job => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${escapeHtml(job.company_ja || '-')}</td>
-            <td>${escapeHtml(job.title_ja || '-')}</td>
-            <td>${escapeHtml(job.location || '-')}</td>
-            <td><span class="status-badge status-${job.status}">${getStatusText(job.status)}</span></td>
-            <td>
-                <button class="btn-icon" onclick="editJob('${job.id}')"><i class="fas fa-edit"></i></button>
-                <button class="btn-icon btn-delete" onclick="deleteJob('${job.id}')"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
-}
-
-// 記事テーブルレンダリング
-function renderArticlesTable() {
     const tbody = document.getElementById('articlesTableBody');
-    if (!tbody) return;
     
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--medium-gray);">記事管理機能は準備中です</td></tr>';
+    if (error || !data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--medium-gray);">記事がありません</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = data.map(article => {
+        const tagsText = article.tags ? article.tags.join(', ') : '-';
+        const publishedText = article.is_published ? '公開中' : '下書き';
+        const publishedDate = article.published_at ? formatDate(article.published_at) : '-';
+        return `
+            <tr>
+                <td>${article.title_ja}</td>
+                <td>${tagsText}</td>
+                <td>${article.view_count || 0}</td>
+                <td>${publishedText}</td>
+                <td>${publishedDate}</td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn-edit" onclick="editArticle('${article.id}')">編集</button>
+                        <button class="btn-delete" onclick="deleteArticle('${article.id}')">削除</button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
 }
 
+// 記事モーダルを開く
+function openArticleModal(articleId = null) {
+    const modal = document.getElementById('articleModal');
+    const form = document.getElementById('articleForm');
+    
+    if (articleId) {
+        // 編集モード
+        document.getElementById('articleModalTitle').textContent = '記事を編集';
+        loadArticleData(articleId);
+    } else {
+        // 新規作成モード
+        document.getElementById('articleModalTitle').textContent = '記事を追加';
+        form.reset();
+        document.getElementById('articleId').value = '';
+    }
+    
+    modal.classList.add('active');
+}
+
+// 記事モーダルを閉じる
+function closeArticleModal() {
+    document.getElementById('articleModal').classList.remove('active');
+}
+
+// 記事データを読み込み
+async function loadArticleData(articleId) {
+    const { data, error } = await supabase
+        .from('knowledge_articles')
+        .select('*')
+        .eq('id', articleId)
+        .single();
+
+    if (error || !data) {
+        alert('記事の読み込みに失敗しました');
+        return;
+    }
+
+    document.getElementById('articleId').value = data.id;
+    document.getElementById('articleTitleJa').value = data.title_ja;
+    document.getElementById('articleExcerptJa').value = data.excerpt_ja;
+    document.getElementById('articleContentJa').value = data.content_ja;
+    document.getElementById('articleTags').value = data.tags ? data.tags.join(', ') : '';
+    document.getElementById('articleImageUrl').value = data.image_url || '';
+    document.getElementById('articlePublished').value = data.is_published ? 'true' : 'false';
+}
+
+// 記事フォーム送信
+document.getElementById('articleForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const articleId = document.getElementById('articleId').value;
+    const titleJa = document.getElementById('articleTitleJa').value;
+    const excerptJa = document.getElementById('articleExcerptJa').value;
+    const contentJa = document.getElementById('articleContentJa').value;
+    const tagsInput = document.getElementById('articleTags').value;
+    const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()) : [];
+    const imageUrl = document.getElementById('articleImageUrl').value;
+    const isPublished = document.getElementById('articlePublished').value === 'true';
+
+    const articleData = {
+        title_ja: titleJa,
+        excerpt_ja: excerptJa,
+        content_ja: contentJa,
+        tags,
+        image_url: imageUrl || null,
+        is_published: isPublished,
+        published_at: isPublished ? new Date().toISOString() : null
+    };
+
+    let error;
+    if (articleId) {
+        // 更新
+        ({ error } = await supabase
+            .from('knowledge_articles')
+            .update(articleData)
+            .eq('id', articleId));
+    } else {
+        // 新規作成
+        ({ error } = await supabase
+            .from('knowledge_articles')
+            .insert([articleData]));
+    }
+
+    if (error) {
+        alert('保存に失敗しました: ' + error.message);
+        return;
+    }
+
+    alert('保存しました');
+    closeArticleModal();
+    loadArticles();
+});
+
+// 記事を編集
+function editArticle(articleId) {
+    openArticleModal(articleId);
+}
+
+// 記事を削除
+async function deleteArticle(articleId) {
+    if (!confirm('本当に削除しますか？')) return;
+
+    const { error } = await supabase
+        .from('knowledge_articles')
+        .delete()
+        .eq('id', articleId);
+
+    if (error) {
+        alert('削除に失敗しました: ' + error.message);
+        return;
+    }
+
+    alert('削除しました');
+    loadArticles();
+}
+
+// ========================================
 // ユーティリティ関数
-function escapeHtml(text) {
-    if (!text) return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
+// ========================================
 
+// 日付フォーマット関数
 function formatDate(dateString) {
     if (!dateString) return '-';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return '-';
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    } catch (error) {
+        console.error('Date formatting error:', error);
+        return '-';
+    }
 }
 
-function getStatusText(status) {
-    const statusMap = {
-        'published': '公開中',
-        'draft': '下書き',
-        'archived': 'アーカイブ',
-        'active': 'アクティブ',
-        'inactive': '非アクティブ'
-    };
-    return statusMap[status] || status;
-}
-
-// ログアウト
-async function logout() {
-    await supabase.auth.signOut();
-    window.location.href = 'admin-login.html';
+// 時刻フォーマット関数
+function formatTime(timeString) {
+    if (!timeString) return '-';
+    try {
+        return timeString.substring(0, 5);
+    } catch (error) {
+        console.error('Time formatting error:', error);
+        return '-';
+    }
 }
